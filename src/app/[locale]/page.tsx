@@ -1,9 +1,5 @@
-import { Hero } from "@/components/hero";
+const RootPage = () => {
+  return <div>RootPage</div>;
+};
 
-export default function Home() {
-  return (
-    <div>
-      <Hero />
-    </div>
-  );
-}
+export default RootPage;
