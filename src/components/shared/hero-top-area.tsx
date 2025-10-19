@@ -3,7 +3,12 @@ import logoImg from "@/assets/logo.svg";
 import star from "@/assets/star.png";
 import Image from "next/image";
 
-export const Hero = () => {
+type Props = {
+  title: string;
+  description: string;
+};
+
+export const HeroTopArea = ({ title, description }: Props) => {
   return (
     <div
       style={{
@@ -23,13 +28,10 @@ export const Hero = () => {
         <div className="relative min-h-[92dvh] flex items-center justify-center overflow-hidden container mx-auto">
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-20">
             <h1 className="text-4xl sm:text-5xl md:text-6xl  font-bold text-white leading-tight mb-6 font-montserrat">
-              A few minutes today can give your church global visibility and
-              direct support.
+              {title}
             </h1>
             <p className="text-lg sm:text-xl text-gray-200  mx-auto mb-10 leading-relaxed w-full">
-              Your work matters. The Providus Alliance gives you a space to
-              share it in detail — so donors and supporters can truly see the
-              heart of your project.
+              {description}
             </p>
           </div>
         </div>
