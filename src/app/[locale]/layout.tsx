@@ -2,6 +2,7 @@ import { fontVariables } from "@/lib/fonts";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import "./../globals.css";
+import NavbarHeroSection from "@/components/navbar/navbar";
 
 export const metadata: Metadata = {
   title: "ICSA",
