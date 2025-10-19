@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock } from "lucide-react";
+import Image, { StaticImageData } from "next/image";
+interface Mission {
+  image: StaticImageData;
+  category: string;
+  categoryColor: string;
+  title: string;
+  description: string;
+  date: string;
+}
 
-export function MissionCard({ mission }) {
+export function MissionCard({ mission }: { mission: Mission }) {
   return (
     <article className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
       {/* Image Container */}
       <div className="relative h-56 overflow-hidden">
-        <img
+        <Image
           src={mission.image}
           alt={mission.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"

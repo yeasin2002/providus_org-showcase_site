@@ -1,13 +1,16 @@
-import React from "react";
-import { ArrowRight, Clock } from "lucide-react";
-import { MissionCard } from "./mission-card";
+import support1 from "@/assets/support1.png";
+import support2 from "@/assets/support2.jpg";
+import support3 from "@/assets/support3.png";
+import support4 from "@/assets/support4.jpg";
+import support5 from "@/assets/support5.png";
+import support6 from "@/assets/support6.jpg";
 import { CTAButton } from "@/components/shared/buttons";
+import { MissionCard } from "./mission-card";
 
 export default function MissionsToSupport() {
   const missions = [
     {
-      image:
-        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&h=600&fit=crop",
+      image: support1,
       category: "Education",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -16,8 +19,7 @@ export default function MissionsToSupport() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=600&fit=crop",
+      image: support2,
       category: "Foundation",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -26,8 +28,7 @@ export default function MissionsToSupport() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop",
+      image: support3,
       category: "Development",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -36,8 +37,8 @@ export default function MissionsToSupport() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=800&h=600&fit=crop",
+      image: support4,
+
       category: "Education",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -46,8 +47,7 @@ export default function MissionsToSupport() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=800&h=600&fit=crop",
+      image: support5,
       category: "Foundation",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -56,8 +56,7 @@ export default function MissionsToSupport() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=800&h=600&fit=crop",
+      image: support6,
       category: "Development",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",

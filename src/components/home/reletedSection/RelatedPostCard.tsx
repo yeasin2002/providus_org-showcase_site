@@ -1,4 +1,14 @@
-export function RelatedPostCard({ post }) {
+import Image, { StaticImageData } from "next/image";
+interface Post {
+  image: StaticImageData;
+  title: string;
+  description: string;
+  author: string;
+  avatar: string;
+  date: string;
+}
+
+export function RelatedPostCard({ post }: { post: Post }) {
   return (
     <article className="group cursor-pointer">
       <a
@@ -7,7 +17,7 @@ export function RelatedPostCard({ post }) {
       >
         {/* Image */}
         <div className="w-full md:w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden">
-          <img
+          <Image
             src={post.image}
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

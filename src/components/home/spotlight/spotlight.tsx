@@ -5,12 +5,19 @@ import { useState } from "react";
 import { SpotLigtCard } from "./sportlight-card";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
+import support1 from "@/assets/support1.png";
+import support2 from "@/assets/support2.jpg";
+import support3 from "@/assets/support3.png";
+import support4 from "@/assets/support4.jpg";
+import support5 from "@/assets/support5.png";
+import support6 from "@/assets/support6.jpg";
+
 export default function Spotlight() {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const spotlight = [
     {
-      image:
-        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&h=600&fit=crop",
+      image: support1,
       category: "Education",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -19,8 +26,7 @@ export default function Spotlight() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=600&fit=crop",
+      image: support2,
       category: "Foundation",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -29,8 +35,7 @@ export default function Spotlight() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop",
+      image: support3,
       category: "Development",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -39,8 +44,7 @@ export default function Spotlight() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=800&h=600&fit=crop",
+      image: support4,
       category: "Education",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -49,8 +53,7 @@ export default function Spotlight() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=800&h=600&fit=crop",
+      image: support5,
       category: "Foundation",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -59,8 +62,7 @@ export default function Spotlight() {
       date: "APRIL 15, 2022",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=800&h=600&fit=crop",
+      image: support6,
       category: "Development",
       categoryColor: "bg-yellow-600",
       title: "Disease Management Programs",
@@ -70,7 +72,23 @@ export default function Spotlight() {
     },
   ];
 
-  const itemsPerPage = 3;
+  // Responsive items per page
+  const getItemsPerPage = () => {
+    if (typeof window === "undefined") return 3;
+    if (window.innerWidth < 640) return 1; // mobile
+    if (window.innerWidth < 1024) return 2; // tablet
+    return 3; // desktop
+  };
+
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
+  // Adjust items per page on resize
+  if (typeof window !== "undefined") {
+    window.addEventListener("resize", () => {
+      setItemsPerPage(getItemsPerPage());
+    });
+  }
+
   const maxIndex = Math.ceil(spotlight.length / itemsPerPage) - 1;
 
   const goToPrevious = () => {
@@ -91,36 +109,41 @@ export default function Spotlight() {
       <div className="max-w-7xl mx-auto relative">
         <Heading title="Spotlight" />
 
-        {/* Carousel Wrapper */}
+        {/* Carousel Container */}
         <div className="relative flex items-center">
           {/* Left Arrow */}
           <button
             onClick={goToPrevious}
-            className="absolute -left-15 z-10 bg-white p-3 rounded-full shadow hover:bg-gray-100"
+            className="absolute left-0 md:-left-10 lg:-left-14 z-10 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors"
             aria-label="Previous"
           >
-            <ArrowLeft />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Cards */}
-          <div className="flex gap-8 overflow-hidden w-full">
+          <div className="flex gap-4 sm:gap-6 lg:gap-8 overflow-hidden w-full justify-center px-10 sm:px-12 md:px-16">
             {visibleMissions.map((mission, index) => (
-              <SpotLigtCard key={index} mission={mission} />
+              <div
+                key={index}
+                className="flex-shrink-0 w-full sm:w-[45%] lg:w-[32%] transition-transform"
+              >
+                <SpotLigtCard mission={mission} />
+              </div>
             ))}
           </div>
 
           {/* Right Arrow */}
           <button
             onClick={goToNext}
-            className="absolute -right-15 z-10 bg-white p-3 rounded-full shadow hover:bg-gray-100"
+            className="absolute right-0 md:-right-10 lg:-right-14 z-10 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors"
             aria-label="Next"
           >
-            <ArrowRight />
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
         {/* Load More Button */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-10 sm:mt-12">
           <CTAButton text="Load More Stories" />
         </div>
       </div>

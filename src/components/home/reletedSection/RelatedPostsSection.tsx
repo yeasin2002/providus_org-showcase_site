@@ -1,11 +1,13 @@
 import React from "react";
 import { RelatedPostCard } from "./RelatedPostCard";
-
+import disconver1 from "@/assets/discover1.png";
+import disconver2 from "@/assets/discover2.jpg";
+import disconver3 from "@/assets/discover3.jpg";
+import disconver4 from "@/assets/discover4.jpg";
 export default function RelatedPostsSection() {
   const posts = [
     {
-      image:
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop",
+      image: disconver1,
       title: "Discover Projects That Make a Difference",
       description:
         "The 2022 FIFA World Cup is in full swing, with brands across the country organising events, timing is crucial, take advantage of initial interest by listing your event early. However , be mindful of when you do list.",
@@ -15,8 +17,7 @@ export default function RelatedPostsSection() {
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop",
+      image: disconver2,
       title: "Discover Projects That Make a Difference",
       description:
         "The 2022 FIFA World Cup is in full swing, with brands across the country organising events, timing is crucial, take advantage of initial interest by listing your event early. However , be mindful of when you do list.",
@@ -26,8 +27,7 @@ export default function RelatedPostsSection() {
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop",
+      image: disconver3,
       title: "Discover Projects That Make a Difference",
       description:
         "The 2022 FIFA World Cup is in full swing, with brands across the country organising events, timing is crucial, take advantage of initial interest by listing your event early. However , be mindful of when you do list.",
@@ -37,8 +37,7 @@ export default function RelatedPostsSection() {
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop",
+      image: disconver4,
       title: "Discover Projects That Make a Difference",
       description:
         "The 2022 FIFA World Cup is in full swing, with brands across the country organising events, timing is crucial, take advantage of initial interest by listing your event early. However , be mindful of when you do list.",
