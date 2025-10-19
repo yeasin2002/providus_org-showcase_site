@@ -1,7 +1,10 @@
+import NGOCTAWithFooter from "@/components/footer/footer";
+import Alliance from "@/components/home/allience";
 import HeroSection from "@/components/home/hero-section";
 import MissionsToSupport from "@/components/home/mission/mission-respect";
 import RelatedPostsSection from "@/components/home/reletedSection/RelatedPostsSection";
 import Spotlight from "@/components/home/spotlight/spotlight";
+
 
 const RootPage = () => {
   return (
@@ -10,6 +13,8 @@ const RootPage = () => {
       <MissionsToSupport />
       <Spotlight />
       <RelatedPostsSection />
+      <Alliance />
+      <NGOCTAWithFooter />
     </div>
   );
 };
