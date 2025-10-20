@@ -1,23 +1,31 @@
 import { MoveUpRight } from "lucide-react";
+interface Props extends React.ComponentProps<"button"> {}
 
-export const CTAButton = ({ text }: { text: string }) => {
+export const CTAButton = ({ children, ...props }: Props) => {
   return (
     <button
-      className="bg-[#C79C44] hover:bg-yellow-500 text-white font-semibold px-6 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90"
+      className="bg-[#C79C44] hover:bg-yellow-500 text-white  pl-6 pr-1.5 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90 font-montserrat font-bold text-lg"
       type="button"
+      {...props}
     >
-      <span>{text}</span>
-      <div className="bg-white p-3 flex  rounded-full  ">
-        <MoveUpRight className="w-5 h-5" color="black" />
+      {children}
+      <div className="bg-white p-2 flex  rounded-full  scale-110">
+        <MoveUpRight className="size-5" color="black" />
       </div>
     </button>
   );
 };
-export const PrimaryButton = ({ text }: { text: string }) => {
+export const PrimaryButton = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <button
       className="bg-[#C79C441F] text-[#023C5E] font-bold flex gap-3 px-4 py-3 rounded-full "
       type="button"
+      {...props}
     >
       <svg
         width={"24"} // Default size 24 if not provided
@@ -33,7 +41,7 @@ export const PrimaryButton = ({ text }: { text: string }) => {
         />
         <path d="M50 35L55.8 50L50 65L44.2 50L50 35Z" fill={"#FFFFFF"} />
       </svg>
-      {text}
+      {children}
     </button>
   );
 };

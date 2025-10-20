@@ -1,10 +1,10 @@
 "use client";
 
 import startSharpIcon from "@/assets/star-sharp.svg";
+import { CTAButton } from "@/components/shared/buttons";
 import { FormInput } from "@/components/shared/form-input";
 import { Badge } from "@/components/ui/badge";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -74,14 +74,12 @@ export const HowItWorksSection = () => {
             required
             registration={register("churchName")}
             error={errors.churchName}
-            placeholder="Enter church name"
           />
           <FormInput
             label="Primary Contact"
             required
             registration={register("primaryContact")}
             error={errors.primaryContact}
-            placeholder="Enter contact person name"
           />
         </div>
 
@@ -92,7 +90,6 @@ export const HowItWorksSection = () => {
             type="email"
             registration={register("email")}
             error={errors.email}
-            placeholder="Enter email address"
           />
         </div>
 
@@ -102,19 +99,13 @@ export const HowItWorksSection = () => {
             required
             registration={register("country")}
             error={errors.country}
-            placeholder="Enter your country or region"
           />
         </div>
 
         <div className="flex justify-center">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-[#C4A053] hover:bg-[#B39048] text-white font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <CTAButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Join the Alliance for Free"}
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          </CTAButton>
         </div>
       </form>
     </section>
