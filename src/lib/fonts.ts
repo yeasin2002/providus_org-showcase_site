@@ -1,4 +1,4 @@
-import { Montserrat, Rubik } from "next/font/google";
+import { Montserrat, Rubik, Work_Sans } from "next/font/google";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -12,5 +12,11 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
-const fontList = [montserrat, rubik];
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-work-sans",
+});
+
+const fontList = [montserrat, rubik, workSans];
 export const fontVariables = fontList.map((font) => font.variable);

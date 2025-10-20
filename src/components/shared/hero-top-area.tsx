@@ -35,7 +35,7 @@ export const HeroTopArea = ({ title, description }: Props) => {
             </p>
           </div>
         </div>
-        <div className="h-[80px] bg-[#C79C44] flex justify-center items-center">
+        <div className="h-[80px] bg-gold flex justify-center items-center">
           <Image src={star} alt="star" className="mr-3" />
           <div className="text-center ">
             <h3 className="md:text-[24px] text-[16px] font-semibold text-[#FFFFFF] leading-3">

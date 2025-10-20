@@ -44,6 +44,9 @@
 
   --font-montserrat: var(--font-montserrat);
   --font-rubik: var(--font-rubik);
+  --font-work-sans: var(--font-work-sans);
+
+  --color-gold: #C79C44
 }
 
 :root {

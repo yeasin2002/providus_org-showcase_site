@@ -58,7 +58,7 @@ export function SpotLigtCard({ mission }: SpotLigtCardProps) {
           href="#"
           className="inline-flex items-center gap-2 text-yellow-600 font-semibold text-sm sm:text-base hover:gap-3 transition-all group"
         >
-          <span className="underline text-[#C79C44] font-bold tracking-wide">
+          <span className="underline text-gold font-bold tracking-wide">
             READ MORE
           </span>
         </a>

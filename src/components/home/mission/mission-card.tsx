@@ -12,7 +12,7 @@ interface Mission {
 
 export function MissionCard({ mission }: { mission: Mission }) {
   return (
-    <article className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
+    <article className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group font-work-sans">
       {/* Image Container */}
       <div className="relative h-56 overflow-hidden">
         <Image
@@ -29,7 +29,7 @@ export function MissionCard({ mission }: { mission: Mission }) {
         {/* Date */}
         <div className="flex justify-between items-center gap-2 text-gray-500 text-sm mb-3">
           <div>
-            <Button className="text-[#ffffff] bg-[#C79C44]">
+            <Button className="text-[#ffffff] bg-gold">
               {mission.category}
             </Button>
           </div>
@@ -40,7 +40,7 @@ export function MissionCard({ mission }: { mission: Mission }) {
         </div>
 
         {/* Title */}
-        <h3 className="text-[24px] font-semibold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors">
+        <h3 className="text-[24px] font-semibold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors font-work-sans ">
           {mission.title}
         </h3>
 
@@ -54,7 +54,7 @@ export function MissionCard({ mission }: { mission: Mission }) {
           href="/"
           className="inline-flex items-center gap-2 text-yellow-600 font-semibold text-sm hover:gap-3 transition-all group"
         >
-          <span className="underline text-[#C79C44] text-[18px] font-bold">
+          <span className="underline text-gold text-[18px] font-bold">
             READ MORE
           </span>
         </a>

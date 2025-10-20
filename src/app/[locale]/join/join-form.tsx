@@ -27,7 +27,7 @@ const joinSchema = z.object({
 
 type JoinFormData = z.infer<typeof joinSchema>;
 
-export const HowItWorksSection = () => {
+export const JoinFormSection = () => {
   const {
     register,
     handleSubmit,
@@ -66,7 +66,7 @@ export const HowItWorksSection = () => {
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border border-[#C79C44] rounded-2xl p-8 md:p-12 bg-card shadow-sm font-montserrat"
+        className="border border-gold rounded-2xl p-8 md:p-12 bg-card shadow-sm font-montserrat"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <FormInput

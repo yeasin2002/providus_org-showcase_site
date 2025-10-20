@@ -4,7 +4,7 @@ interface Props extends React.ComponentProps<"button"> {}
 export const CTAButton = ({ children, ...props }: Props) => {
   return (
     <button
-      className="bg-[#C79C44] hover:bg-yellow-500 text-white  pl-6 pr-1.5 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90 font-montserrat font-bold text-lg"
+      className="bg-gold hover:bg-yellow-500 text-white  pl-6 pr-1.5 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90 font-montserrat font-bold text-lg"
       type="button"
       {...props}
     >
