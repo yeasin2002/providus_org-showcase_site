@@ -78,14 +78,14 @@ export default function MissionsToSupport() {
 
         {/* Missions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {missions.map((mission, index) => (
-            <MissionCard key={index} mission={mission} />
+          {missions.map((mission) => (
+            <MissionCard key={mission.title} mission={mission} />
           ))}
         </div>
 
         {/* Load More Button */}
         <div className="flex justify-center">
-          <CTAButton text="Load More Stories" />
+          <CTAButton>Load more Stories</CTAButton>
         </div>
       </div>
     </section>

@@ -1,5 +1,4 @@
 "use client";
-import { CTAButton } from "@/components/shared/buttons";
 import { Heading } from "@/components/shared/headingt";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
@@ -142,11 +141,6 @@ export default function Spotlight() {
           >
             <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
-        </div>
-
-        {/* Load More Button */}
-        <div className="flex justify-center mt-10 sm:mt-12">
-          <CTAButton>Load More Stories</CTAButton>
         </div>
       </div>
     </section>
