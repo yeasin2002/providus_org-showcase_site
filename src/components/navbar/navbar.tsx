@@ -19,9 +19,8 @@ export default function CleanNavbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center gap-3 group">
-            <Image src={logo} alt="logo" height={100} width={100}/>
+            <Image src={logo} alt="logo" height={100} width={100} />
           </div>
-          
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

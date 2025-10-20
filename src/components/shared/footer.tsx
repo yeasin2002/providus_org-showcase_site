@@ -8,7 +8,7 @@ import {
   Twitter,
 } from "lucide-react";
 import Link from "next/link";
-export  function Footer() {
+export function Footer() {
   const quickLinks = [
     { label: "Home", href: "#" },
     { label: "Why Join", href: "#" },
