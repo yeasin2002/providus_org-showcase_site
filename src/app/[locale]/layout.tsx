@@ -2,6 +2,7 @@ import { fontVariables } from "@/lib/fonts";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import "./../globals.css";
+import { routing } from "@/i18n/routing";
 
 export const metadata: Metadata = {
   title: "ICSA",
@@ -20,4 +21,8 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
