@@ -65,7 +65,7 @@ export const ProjectUploadForm = () => {
   };
 
   return (
-    <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-montserrat">
+    <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik">
       {/* Header */}
       <div className="text-center mb-12">
         <Badge className="bg-[#F7F3E8] text-[#023C5E] rounded-full px-6 py-1 mb-4">
@@ -95,7 +95,6 @@ export const ProjectUploadForm = () => {
             required
             registration={register("projectName")}
             error={errors.projectName}
-            placeholder="Enter project or church name"
           />
         </div>
 
@@ -106,7 +105,6 @@ export const ProjectUploadForm = () => {
             required
             registration={register("description")}
             error={errors.description as any}
-            placeholder="Describe your project or mission"
             rows={6}
           />
         </div>
@@ -154,7 +152,6 @@ export const ProjectUploadForm = () => {
             required
             registration={register("country")}
             error={errors.country}
-            placeholder="Select your country or region"
             options={countries}
           />
         </div>
@@ -172,7 +169,6 @@ export const ProjectUploadForm = () => {
               type="email"
               registration={register("contactEmail")}
               error={errors.contactEmail}
-              placeholder="(Your Best Email — So Donors Or Partners Can Write To You Directly.)"
             />
 
             <FormInput
@@ -180,7 +176,6 @@ export const ProjectUploadForm = () => {
               type="url"
               registration={register("website")}
               error={errors.website}
-              placeholder="(Optional — Link To Your Church Or Ministry Website.)"
             />
 
             <FormInput
@@ -188,7 +183,6 @@ export const ProjectUploadForm = () => {
               type="url"
               registration={register("donationLink")}
               error={errors.donationLink}
-              placeholder="(Optional — Paste Your Donation Link If You Already Have One, Like PayPal Or A Giving Page.)"
             />
           </div>
         </div>
