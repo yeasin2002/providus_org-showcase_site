@@ -1,9 +1,9 @@
 "use client";
 import { CTAButton } from "@/components/shared/buttons";
-import { Heading } from "@/components/reusable/headingt";
+import { Heading } from "@/components/shared/headingt";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { SpotLigtCard } from "./sportlight-card";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import support1 from "@/assets/support1.png";
 import support2 from "@/assets/support2.jpg";
@@ -101,7 +101,7 @@ export default function Spotlight() {
 
   const visibleMissions = spotlight.slice(
     currentIndex * itemsPerPage,
-    (currentIndex + 1) * itemsPerPage,
+    (currentIndex + 1) * itemsPerPage
   );
 
   return (
@@ -116,15 +116,16 @@ export default function Spotlight() {
             onClick={goToPrevious}
             className="absolute left-0 md:-left-10 lg:-left-14 z-10 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors"
             aria-label="Previous"
+            type="button"
           >
             <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Cards */}
           <div className="flex gap-4 sm:gap-6 lg:gap-8 overflow-hidden w-full justify-center px-10 sm:px-12 md:px-16">
-            {visibleMissions.map((mission, index) => (
+            {visibleMissions.map((mission) => (
               <div
-                key={index}
+                key={mission.title}
                 className="flex-shrink-0 w-full sm:w-[45%] lg:w-[32%] transition-transform"
               >
                 <SpotLigtCard mission={mission} />
@@ -137,6 +138,7 @@ export default function Spotlight() {
             onClick={goToNext}
             className="absolute right-0 md:-right-10 lg:-right-14 z-10 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors"
             aria-label="Next"
+            type="button"
           >
             <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
@@ -144,7 +146,7 @@ export default function Spotlight() {
 
         {/* Load More Button */}
         <div className="flex justify-center mt-10 sm:mt-12">
-          <CTAButton text="Load More Stories" />
+          <CTAButton>Load More Stories</CTAButton>
         </div>
       </div>
     </section>

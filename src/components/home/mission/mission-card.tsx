@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import { Clock } from "lucide-react";
+import Image, { type StaticImageData } from "next/image";
 interface Mission {
   image: StaticImageData;
   category: string;
@@ -51,7 +51,7 @@ export function MissionCard({ mission }: { mission: Mission }) {
 
         {/* Read More Link */}
         <a
-          href="#"
+          href="/"
           className="inline-flex items-center gap-2 text-yellow-600 font-semibold text-sm hover:gap-3 transition-all group"
         >
           <span className="underline text-[#C79C44] text-[18px] font-bold">

@@ -1,7 +1,6 @@
-import { Award, Globe, Heart } from "lucide-react";
-import Image from "next/image";
 import mainImg from "@/assets/fellowshipMain.png";
-import { CTAButton, PrimaryButton } from "@/components/reusable/buttons";
+import { CTAButton, PrimaryButton } from "@/components/shared/buttons";
+import Image from "next/image";
 
 export default function Alliance() {
   //   const features = [
@@ -30,7 +29,7 @@ export default function Alliance() {
           {/* Content Section */}
           <div className="space-y-8">
             <div className=" space-y-6">
-              <PrimaryButton text="About The Alience" />
+              <PrimaryButton>About The Alience</PrimaryButton>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
                 About the Alliance
               </h2>
@@ -45,7 +44,7 @@ export default function Alliance() {
               </p>
             </div>
 
-            <CTAButton text="Share My Church’s Story Today" />
+            <CTAButton>Share My Church’s Story Today</CTAButton>
           </div>
 
           {/* Image Section */}

@@ -4,7 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  images: { remotePatterns: [] },
+  images: {
+    remotePatterns: [{ hostname: "images.unsplash.com" }],
+  },
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === "production",
   },
