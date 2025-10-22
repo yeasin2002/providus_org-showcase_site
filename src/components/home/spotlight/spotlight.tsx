@@ -104,7 +104,10 @@ export default function Spotlight() {
   );
 
   return (
-    <section className="w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+    <section
+      className="w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8"
+      id="spotlight"
+    >
       <div className="max-w-7xl mx-auto relative">
         <Heading title="Spotlight" />
 

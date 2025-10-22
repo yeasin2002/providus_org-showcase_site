@@ -70,7 +70,7 @@ export default function MissionsToSupport() {
     <section className="w-full bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12 md:mb-16" id="missions">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
             Missions to Support
           </h2>
