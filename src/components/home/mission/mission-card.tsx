@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Clock } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 interface Mission {
   image: StaticImageData;
@@ -33,10 +32,10 @@ export function MissionCard({ mission }: { mission: Mission }) {
               {mission.category}
             </Button>
           </div>
-          <div className="flex justify-between items-center gap-2 text-gray-500 text-sm mb-3">
+          {/* <div className="flex justify-between items-center gap-2 text-gray-500 text-sm mb-3">
             <Clock className="w-4 h-4" />
             <time dateTime={mission.date}>{mission.date}</time>
-          </div>
+          </div> */}
         </div>
 
         {/* Title */}
@@ -50,14 +49,14 @@ export function MissionCard({ mission }: { mission: Mission }) {
         </p>
 
         {/* Read More Link */}
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-yellow-600 font-semibold text-sm hover:gap-3 transition-all group"
+        <button
+          className="inline-flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all group cursor-pointer"
+          type="button"
         >
           <span className="underline text-gold text-[18px] font-bold">
             READ MORE
           </span>
-        </a>
+        </button>
       </div>
     </article>
   );

@@ -1,16 +1,12 @@
 "use client";
 import logo from "@/assets/navLogo.png";
+import { navLinks } from "@/data/menu-list";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+
 export default function CleanNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const navLinks = [
-    { label: "Missions to Support", href: "#missions" },
-    { label: "Spotlight", href: "#spotlight" },
-    { label: "About the Alliance", href: "#about" },
-  ];
 
   return (
     <nav className="w-full   top-0 z-50">

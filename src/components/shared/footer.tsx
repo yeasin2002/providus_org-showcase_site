@@ -1,4 +1,5 @@
 import logoImage from "@/assets/logo.svg";
+import { navLinks } from "@/data/menu-list";
 
 import { cn } from "@/lib/utils";
 import {
@@ -7,7 +8,6 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Phone,
   Twitter,
 } from "lucide-react";
 import Image from "next/image";
@@ -16,41 +16,32 @@ import Link from "next/link";
 interface Props extends React.ComponentProps<"footer"> {}
 
 export function Footer({ className }: Props) {
-  const quickLinks = [
-    { label: "Home", href: "#" },
-    { label: "Why Join", href: "#" },
-    { label: "How it works", href: "#" },
-    { label: "Stories", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Vision", href: "#" },
-  ];
-
-  const recentPosts = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=200&h=200&fit=crop",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=200&h=200&fit=crop",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?w=200&h=200&fit=crop",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=200&h=200&fit=crop",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1757609211191-f0a93f7c270b?w=200&h=200&fit=crop",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=200&h=200&fit=crop",
-    },
-  ];
+  // const recentPosts = [
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=200&h=200&fit=crop",
+  //   },
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=200&h=200&fit=crop",
+  //   },
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?w=200&h=200&fit=crop",
+  //   },
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=200&h=200&fit=crop",
+  //   },
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1757609211191-f0a93f7c270b?w=200&h=200&fit=crop",
+  //   },
+  //   {
+  //     image:
+  //       "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=200&h=200&fit=crop",
+  //   },
+  // ];
 
   return (
     <footer className={cn("w-full bg-black text-white", className)}>
@@ -105,7 +96,7 @@ export function Footer({ className }: Props) {
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
+              {navLinks .map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -133,7 +124,7 @@ export function Footer({ className }: Props) {
                   New York, USA
                 </p>
               </li>
-              <li className="flex items-center gap-3">
+              {/* <li className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
@@ -143,7 +134,7 @@ export function Footer({ className }: Props) {
                 >
                   (850) 562 7192
                 </a>
-              </li>
+              </li> */}
               <li className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5" />
@@ -161,7 +152,7 @@ export function Footer({ className }: Props) {
           </div>
 
           {/* Recent Post */}
-          <div>
+          {/* <div>
             <h3 className="text-white font-bold text-lg mb-6">Recent Post</h3>
             <div className="grid grid-cols-3 gap-2">
               {recentPosts.map((post, index) => (
@@ -180,7 +171,7 @@ export function Footer({ className }: Props) {
                 </a>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
