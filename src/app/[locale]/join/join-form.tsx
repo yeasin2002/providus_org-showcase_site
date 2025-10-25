@@ -22,7 +22,7 @@ const joinSchema = z.object({
     .string()
     .min(2, "Contact name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  country: z.string().min(2, "Please enter your country/region"),
+  country: z.string().min(2, "Please enter your country"),
   website: z.string().optional(), // Honeypot field
   mathAnswer: z.string().min(1, "Please answer the security question"),
 });
@@ -276,13 +276,11 @@ export const JoinFormSection = () => {
     setSubmitAttempted(true);
     setTimeWarning("");
 
-    // 1. Honeypot check
     if (data.website) {
       console.warn("Spam detected: honeypot field filled");
-      return; // Silently reject
+      return;
     }
 
-    // 2. Time check
     const timeElapsed = Date.now() - formLoadTime;
     if (timeElapsed < MIN_SUBMIT_TIME) {
       setTimeWarning(
@@ -291,8 +289,6 @@ export const JoinFormSection = () => {
       setSubmitAttempted(false);
       return;
     }
-
-    // 3. Math verification
     const userAnswer = parseInt(data.mathAnswer || "0", 10);
     if (userAnswer !== mathQuestion.answer) {
       setTimeWarning(
