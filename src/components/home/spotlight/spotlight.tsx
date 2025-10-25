@@ -100,7 +100,7 @@ export default function Spotlight() {
 
   const visibleMissions = spotlight.slice(
     currentIndex * itemsPerPage,
-    (currentIndex + 1) * itemsPerPage
+    (currentIndex + 1) * itemsPerPage,
   );
 
   return (

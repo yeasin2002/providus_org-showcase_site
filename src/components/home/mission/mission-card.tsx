@@ -43,7 +43,7 @@ export function MissionCard({
 
   const prevImage = () => {
     setCurrentImageIndex(
-      (prev) => (prev - 1 + allImages.length) % allImages.length
+      (prev) => (prev - 1 + allImages.length) % allImages.length,
     );
   };
 
@@ -53,8 +53,31 @@ export function MissionCard({
       ? mission.shortDescription.substring(0, 247) + "..."
       : mission.shortDescription;
 
+  // Generate unique ID for this card
+  const cardId = `mission-card-${mission.projectTitle
+    .toLowerCase()
+    .replace(/\s+/g, "-")}`;
+
+  const handleToggle = () => {
+    onToggle();
+
+    // Scroll to card after toggle
+    setTimeout(() => {
+      const element = document.getElementById(cardId);
+      if (element) {
+        const yOffset = -100; // Offset for spacing from top
+        const y =
+          element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }, 100);
+  };
+
   return (
-    <article className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 font-work-sans">
+    <article
+      id={cardId}
+      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 font-work-sans scroll-mt-24"
+    >
       {/* Image Container */}
       <div className="relative h-56 overflow-hidden group">
         <Image
@@ -259,7 +282,7 @@ export function MissionCard({
 
         {/* Read More / Close Button */}
         <button
-          onClick={onToggle}
+          onClick={handleToggle}
           className="inline-flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all mt-2"
           type="button"
         >
