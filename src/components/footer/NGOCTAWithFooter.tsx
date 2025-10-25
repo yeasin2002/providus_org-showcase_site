@@ -26,7 +26,7 @@ export default function NGOCTAWithFooter() {
                     className="bg-white hover:bg-gray-100 text-yellow-600 font-semibold px-6 sm:px-8 py-2 sm:py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 gap-4 transition-all duration-300 shadow-md hover:shadow-xl group"
                     type="button"
                   >
-                    <span className="text-sm sm:text-base">
+                    <span className="text-sm sm:text-base" id="share">
                       Join the Alliance
                     </span>
                     <div className="w-10 sm:w-12 h-10 sm:h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform">

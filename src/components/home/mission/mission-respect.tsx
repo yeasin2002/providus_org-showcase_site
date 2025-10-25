@@ -9,14 +9,21 @@ import support6 from "@/assets/support6.jpg";
 import { CTAButton } from "@/components/shared/buttons";
 import { useState } from "react";
 import { MissionCard } from "./mission-card";
+import { useRouter } from "next/navigation";
 
 export default function MissionsToSupport() {
+  const navigate = useRouter();
   const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
     null
   );
 
   const handleCardToggle = (index: number) => {
     setExpandedCardIndex(expandedCardIndex === index ? null : index);
+    if (expandedCardIndex === index) {
+      missions.map((singleMisson) => {
+        navigate.push(singleMisson.projectTitle);
+      });
+    }
   };
 
   const missions = [

@@ -46,8 +46,9 @@ export default function Alliance() {
                 sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
             </div>
-
-            <CTAButton>Share My Church’s Story Today</CTAButton>
+            <a href="#share">
+              <CTAButton>Share My Church’s Story Today</CTAButton>
+            </a>
           </div>
 
           {/* Image Section */}

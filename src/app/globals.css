@@ -46,7 +46,7 @@
   --font-rubik: var(--font-rubik);
   --font-work-sans: var(--font-work-sans);
 
-  --color-gold: #C79C44
+  --color-gold: #c79c44;
 }
 
 :root {
@@ -91,4 +91,7 @@
   body {
     @apply bg-background text-foreground font-montserrat scroll-smooth;
   }
+}
+@html {
+  scroll-behavior: smooth;
 }
