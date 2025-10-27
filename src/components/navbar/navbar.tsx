@@ -1,5 +1,5 @@
 "use client";
-import logo from "@/assets/navLogo.png";
+import logo from "@/assets/logo-main.png";
 import { navLinks } from "@/data/menu-list";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";

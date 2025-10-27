@@ -29,7 +29,7 @@ export const HeroTopArea = ({ title, description }: Props) => {
               alt="Logo"
               className="md:w-28 md:h-28 w-16 h-16 mx-auto absolute top-5 z-50"
             />
-            <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="absolute top-14 left-1/2 transform -translate-x-1/2 z-50 ">
               <button
                 type="button"
                 onClick={(e) => {
@@ -37,12 +37,13 @@ export const HeroTopArea = ({ title, description }: Props) => {
                   const target = document.getElementById("join-here");
                   if (target) target.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="text-white text-lg font-montserrat font-normal hover:text-gold transition-colors duration-300"
+                className="text-white text-lg font-montserrat font-normal hover:text-gold transition-colors duration-300 ring-1 px-3 py-1 rounded-xl"
               >
-                Join here
+                Join Here
               </button>
             </div>
           </div>
+
           {/* ↓ Updated height from 92dvh to 80vh */}
           <div className="relative min-h-[75vh] flex items-center justify-center overflow-hidden container mx-auto">
             <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-20">
