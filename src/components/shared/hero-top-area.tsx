@@ -3,7 +3,6 @@ import bgImg from "@/assets/background.jpg";
 import logoImg from "@/assets/logo.svg";
 import star from "@/assets/star.png";
 import Image from "next/image";
-import Link from "next/link";
 
 type Props = {
   title: string;
@@ -16,6 +15,9 @@ export const HeroTopArea = ({ title, description }: Props) => {
       <div
         style={{
           backgroundImage: `url(${bgImg.src})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50 max-h-[80vh]" />
@@ -28,8 +30,8 @@ export const HeroTopArea = ({ title, description }: Props) => {
               className="md:w-28 md:h-28 w-16 h-16 mx-auto absolute top-5 z-50"
             />
             <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-50">
-              <a
-                href="#join-here"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   const target = document.getElementById("join-here");
@@ -38,7 +40,7 @@ export const HeroTopArea = ({ title, description }: Props) => {
                 className="text-white text-lg font-montserrat font-normal hover:text-gold transition-colors duration-300"
               >
                 Join here
-              </a>
+              </button>
             </div>
           </div>
           {/* ↓ Updated height from 92dvh to 80vh */}
