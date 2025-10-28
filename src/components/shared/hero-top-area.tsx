@@ -39,7 +39,7 @@ export const HeroTopArea = ({ title, description }: Props) => {
                 }}
                 className="text-white text-lg font-montserrat font-normal hover:text-gold transition-colors duration-300 ring-1 px-3 py-1 rounded-xl"
               >
-                Join Here
+                Share Your Story Here
               </button>
             </div>
           </div>

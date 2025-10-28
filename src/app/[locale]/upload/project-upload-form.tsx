@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, Video } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,7 +35,8 @@ const projectSchema = z.object({
     .url("Please enter a valid URL")
     .optional()
     .or(z.literal("")),
-  additionalPhotos: z.string(),
+  additionalPhotos: z.string().optional(),
+  mathAnswer: z.string().optional(),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -291,18 +293,124 @@ export const ProjectUploadForm = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
   });
+  const MIN_SUBMIT_TIME = 3000; // 5 seconds minimum
 
-  const onSubmit = async (data: ProjectFormData) => {
-    console.log("Form submitted:", data);
-    // TODO: Implement API call to submit data to Supabase
+  // Generate simple math question
+  const generateMathQuestion = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    return { question: `${num1} + ${num2}`, answer: num1 + num2 };
   };
 
+  const [formLoadTime] = useState<number>(Date.now());
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [timeWarning, setTimeWarning] = useState("");
+  const [mathQuestion] = useState(generateMathQuestion());
+  const [interactionCount, setInteractionCount] = useState(0);
+
+  // Watch honeypot field
+  const websiteValue = watch("website");
+  const mathAnswer = watch("mathAnswer");
+
+  // Track user interactions (real users interact with form)
+  useEffect(() => {
+    const handleInteraction = () => {
+      setInteractionCount((prev) => prev + 1);
+    };
+
+    // Track clicks, typing, mouse movement
+    document.addEventListener("click", handleInteraction);
+    document.addEventListener("keydown", handleInteraction);
+    document.addEventListener("mousemove", handleInteraction);
+
+    return () => {
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
+      document.removeEventListener("mousemove", handleInteraction);
+    };
+  }, []);
+
+  const onSubmit = async (data) => {
+    setSubmitAttempted(true);
+    setTimeWarning("");
+
+    if (data.website) {
+      console.warn("Spam detected: honeypot field filled");
+      return;
+    }
+
+    const timeElapsed = Date.now() - formLoadTime;
+    if (timeElapsed < MIN_SUBMIT_TIME) {
+      setTimeWarning(
+        "Please take a moment to review your information before submitting."
+      );
+      setSubmitAttempted(false);
+      return;
+    }
+    const userAnswer = parseInt(data.mathAnswer || "0", 10);
+    if (userAnswer !== mathQuestion.answer) {
+      setTimeWarning(
+        "Incorrect answer to the security question. Please try again."
+      );
+      setSubmitAttempted(false);
+      return;
+    }
+
+    // 4. Interaction check (bots don't interact naturally)
+    if (interactionCount < 5) {
+      console.warn("Insufficient interaction detected");
+      setTimeWarning("Please review the form before submitting.");
+      setSubmitAttempted(false);
+      return;
+    }
+
+    // 5. Remove honeypot field before sending
+    const { website, mathAnswer: _, ...submitData } = data;
+
+    try {
+      // Your API submission logic here
+      const response = await fetch("/api/join", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...submitData,
+          formLoadTime,
+          submitTime: Date.now(),
+          interactionCount,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      const result = await response.json();
+      console.log("Form submitted successfully:", result);
+
+      // Handle success (e.g., show success message, redirect, etc.)
+    } catch (error) {
+      console.error("Submission error:", error);
+      setTimeWarning("An error occurred. Please try again.");
+      setSubmitAttempted(false);
+    }
+  };
+
+  // const onSubmit = async (data: ProjectFormData) => {
+  //   console.log("Form submitted:", data);
+  // };
+
   return (
-    <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik" id="join-here">
+    <section
+      className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik"
+      id="join-here"
+    >
       {/* Header */}
       <div className="text-center mb-12">
         <Badge className="bg-[#F7F3E8] text-[#023C5E] rounded-full px-6 py-1 mb-4">
@@ -372,7 +480,7 @@ export const ProjectUploadForm = () => {
             control={control}
             render={({ field }) => (
               <FormFileUpload
-                label="4. Upload a Video"
+                label="4. Upload a Video(optional)"
                 accept="video/mp4,video/webm"
                 maxSize={50 * 1024 * 1024}
                 icon={<Video className="w-6 h-6 text-[#C4A053]" />}
@@ -414,7 +522,7 @@ export const ProjectUploadForm = () => {
 
         {/* 6. Contact Details */}
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">
+          <h3 className="text-lg capitalize font-medium">
             6. Contact Information (Displayed Publicly)
           </h3>
           <p className="text-sm text-gray-400 mb-4">
@@ -450,14 +558,70 @@ export const ProjectUploadForm = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="flex flex-col items-center gap-4">
-          <CTAButton type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Publishing..." : "Publish My Story"}
-          </CTAButton>
-          <p className="text-sm text-muted-foreground text-center max-w-2xl">
-            This Is Just The Beginning. You Can Add More Projects Anytime To
-            Help Them Be Discovered By Donors And Supporters
+        <div className="mb-8">
+          {/* <label className="block text-gray-700 font-medium mb-2">
+            Security Question <span className="text-red-500">*</span>
+          </label> */}
+          <div className="flex items-center gap-4">
+            <div className="bg-gray-50 border border-gray-300 rounded-md px-4 py-3 text-lg font-semibold">
+              {mathQuestion.question} = ?
+            </div>
+            <FormInput
+              label=""
+              type="text"
+              registration={register("mathAnswer")}
+              placeholder="Your answer"
+              error={errors.mathAnswer}
+          
+            />
+            {errors.mathAnswer && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.mathAnswer.message}
+              </p>
+            )}
+          </div>
+
+          <p className="text-gray-500 text-sm mt-2">
+            Please solve this simple math problem to verify you're human
           </p>
+        </div>
+        {timeWarning && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-yellow-800 text-sm text-center">{timeWarning}</p>
+          </div>
+        )}
+        <div className="flex justify-center">
+          <CTAButton type="submit" disabled={isSubmitting || submitAttempted}>
+            {isSubmitting ? (
+              <span className="flex items-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Submitting...
+              </span>
+            ) : submitAttempted ? (
+              "Submitted"
+            ) : (
+              "Join the Alliance for Free"
+            )}
+          </CTAButton>
         </div>
       </form>
     </section>

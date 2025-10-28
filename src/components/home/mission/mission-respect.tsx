@@ -35,7 +35,7 @@ export default function MissionsToSupport() {
   };
 
   return (
-    <section className="w-full bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+    <section className="w-full bg-white py-16 md:py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16" id="missions">

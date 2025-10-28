@@ -15,6 +15,7 @@ interface FormInputProps {
   registration: UseFormRegisterReturn;
   type?: "text" | "email" | "password" | "number" | "tel" | "url";
   placeholder?: string;
+  mathAnswer?: string | number;
 }
 
 export const FormInput = ({

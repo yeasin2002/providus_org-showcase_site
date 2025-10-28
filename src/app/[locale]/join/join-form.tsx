@@ -463,11 +463,7 @@ export const JoinFormSection = () => {
         </div>
 
         {/* Time warning message */}
-        {timeWarning && (
-          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-yellow-800 text-sm text-center">{timeWarning}</p>
-          </div>
-        )}
+   
 
         <div className="flex justify-center">
           <CTAButton type="submit" disabled={isSubmitting || submitAttempted}>
