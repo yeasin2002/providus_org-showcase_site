@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function Spotlight() {
   const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
-    null
+    null,
   );
 
   const handleCardToggle = (index: number) => {

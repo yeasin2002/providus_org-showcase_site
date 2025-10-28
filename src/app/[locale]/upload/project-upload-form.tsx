@@ -302,7 +302,10 @@ export const ProjectUploadForm = () => {
   };
 
   return (
-    <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik" id="join-here">
+    <section
+      className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik"
+      id="join-here"
+    >
       {/* Header */}
       <div className="text-center mb-12">
         <Badge className="bg-[#F7F3E8] text-[#023C5E] rounded-full px-6 py-1 mb-4">
