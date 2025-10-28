@@ -28,7 +28,10 @@ export const FormTextarea = ({
 }: FormTextareaProps) => {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <Label htmlFor={registration.name}>
+      <Label
+        htmlFor={registration.name}
+        className="text-lg capitalize font-medium"
+      >
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
