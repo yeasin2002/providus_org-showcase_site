@@ -7,7 +7,7 @@ import { MissionCard } from "./mission-card";
 
 export default function MissionsToSupport() {
   const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
-    null
+    null,
   );
 
   const handleCardToggle = (index: number) => {

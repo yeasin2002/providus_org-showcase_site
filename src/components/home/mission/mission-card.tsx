@@ -119,7 +119,7 @@ export function MissionCard({
         <div
           className={cn(
             "overflow-hidden transition-all duration-300",
-            isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+            isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0",
           )}
         >
           <div className="pt-4 border-t space-y-6">
@@ -183,7 +183,7 @@ export function MissionCard({
                         "flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
                         currentImageIndex === idx
                           ? "border-gold"
-                          : "border-transparent opacity-60 hover:opacity-100"
+                          : "border-transparent opacity-60 hover:opacity-100",
                       )}
                     >
                       <Image
