@@ -5,6 +5,7 @@ const Dashboard = async () => {
 
   const { data: churches, error } = await supabase.from("churches").select();
 
+
   if (error) {
     console.error("Error fetching churches:", error);
   }
