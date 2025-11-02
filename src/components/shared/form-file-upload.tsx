@@ -71,7 +71,7 @@ export const FormFileUpload = ({
               "w-16 h-16 border-2 border-dashed rounded-lg flex items-center justify-center transition-colors",
               isDragging
                 ? "border-[#C4A053] bg-[#F7F3E8]"
-                : "border-[#C4A053] group-hover:bg-[#F7F3E8]"
+                : "border-[#C4A053] group-hover:bg-[#F7F3E8]",
             )}
           >
             {icon || <Upload className="w-6 h-6 text-[#C4A053]" />}

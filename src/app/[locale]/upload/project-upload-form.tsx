@@ -347,7 +347,7 @@ export const ProjectUploadForm = () => {
     const timeElapsed = Date.now() - formLoadTime;
     if (timeElapsed < MIN_SUBMIT_TIME) {
       setTimeWarning(
-        "Please take a moment to review your information before submitting."
+        "Please take a moment to review your information before submitting.",
       );
       setSubmitAttempted(false);
       return;
@@ -355,7 +355,7 @@ export const ProjectUploadForm = () => {
     const userAnswer = parseInt(data.mathAnswer || "0", 10);
     if (userAnswer !== mathQuestion.answer) {
       setTimeWarning(
-        "Incorrect answer to the security question. Please try again."
+        "Incorrect answer to the security question. Please try again.",
       );
       setSubmitAttempted(false);
       return;
@@ -572,7 +572,6 @@ export const ProjectUploadForm = () => {
               registration={register("mathAnswer")}
               placeholder="Your answer"
               error={errors.mathAnswer}
-          
             />
             {errors.mathAnswer && (
               <p className="text-red-500 text-sm mt-1">

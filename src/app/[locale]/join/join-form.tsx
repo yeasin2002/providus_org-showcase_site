@@ -463,7 +463,6 @@ export const JoinFormSection = () => {
         </div>
 
         {/* Time warning message */}
-   
 
         <div className="flex justify-center">
           <CTAButton type="submit" disabled={isSubmitting || submitAttempted}>
