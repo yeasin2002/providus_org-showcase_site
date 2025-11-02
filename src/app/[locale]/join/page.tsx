@@ -1,7 +1,6 @@
-import { Footer } from "@/components/shared/footer";
 import { HeroTopArea } from "@/components/shared/hero-top-area";
-import { JoinFormSection } from "./join-form";
 import { FooterUpload } from "../upload/footerUpload";
+import { JoinFormSection } from "./join-form";
 
 export default function JoinPage() {
   return (

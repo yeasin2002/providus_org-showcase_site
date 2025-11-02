@@ -1,15 +1,7 @@
 import logoImage from "@/assets/logo.svg";
-import { navLinks } from "@/data/menu-list";
 
 import { cn } from "@/lib/utils";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
