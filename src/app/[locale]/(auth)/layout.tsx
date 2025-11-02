@@ -2,6 +2,7 @@ import React from "react";
 
 import bgImag from "@/assets/background.jpg";
 import logo from "@/assets/logo.svg";
+import Image from "next/image";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -15,10 +16,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           className="absolute w-full h-full bg-no-repeat bg-fixed bg-center bg-cover opacity-50"
         ></div>
         <div className="relative z-10 flex flex-col justify-between w-full px-12 py-12">
-          <div className="flex items-center">
-            <img src={logo} alt="logo" className="w-10 h-10" />
-            <h1 className="text-2xl font-bold text-foreground">ICSA</h1>
-          </div>
+          <Image src={logo} alt="logo" />
 
           <div className="flex-1 flex flex-col justify-center">
             <h2 className="text-4xl text-white mb-6 leading-tight font-bold">

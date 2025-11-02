@@ -1,14 +1,15 @@
 "use client";
 
+import logo from "@/assets/logo.svg";
 import { FormInput } from "@/components/shared/form-input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -56,16 +57,7 @@ export default function LoginPage() {
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
       <div className="w-full max-w-md space-y-8">
-        {/* Mobile Logo */}
-        <div className="lg:hidden text-center mb-8">
-          <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3"
-            style={{ backgroundColor: "#C4A053" }}
-          >
-            <div className="w-6 h-6 bg-white rounded-sm" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">ICSA</h1>
-        </div>
+        <Image src={logo} alt="logo" width={100} height={100} />
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -85,18 +77,18 @@ export default function LoginPage() {
 
           {/* Password Field */}
           <div className="space-y-2">
-            <div className="relative">
-              <div className="space-y-6">
-                <FormInput
-                  label="Admin Email"
-                  required
-                  type="email"
-                  registration={register("email")}
-                  error={errors.email}
-                  placeholder="Enter admin email"
-                  inputClassName="pr-10"
-                />
+            <div className="space-y-6">
+              <FormInput
+                label="Admin Email"
+                required
+                type="email"
+                registration={register("email")}
+                error={errors.email}
+                placeholder="Enter admin email"
+                inputClassName="pr-10"
+              />
 
+              <div className="relative">
                 <FormInput
                   label="Admin Password"
                   required
@@ -106,21 +98,20 @@ export default function LoginPage() {
                   placeholder="Enter admin password"
                   inputClassName="pr-10"
                 />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-[38px] h-10 px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </Button>
               </div>
-
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-[38px] h-10 px-3 py-2 hover:bg-transparent"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4 text-muted-foreground" />
-                ) : (
-                  <Eye className="h-4 w-4 text-muted-foreground" />
-                )}
-              </Button>
             </div>
           </div>
 
