@@ -1,7 +1,6 @@
-import { Footer } from "@/components/shared/footer";
 import { HeroTopArea } from "@/components/shared/hero-top-area";
-import { ProjectUploadForm } from "./project-upload-form";
 import { FooterUpload } from "./footerUpload";
+import { ProjectUploadForm } from "./project-upload-form";
 
 export default function Upload() {
   return (
@@ -13,8 +12,7 @@ featured on the ICSA page. "
       />
 
       <ProjectUploadForm />
-       <FooterUpload />
-       
+      <FooterUpload />
     </div>
   );
 }

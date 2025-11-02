@@ -1,5 +1,3 @@
-import React from "react";
-
 import bgImag from "@/assets/background.jpg";
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
