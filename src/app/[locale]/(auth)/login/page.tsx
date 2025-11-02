@@ -3,6 +3,7 @@
 import logo from "@/assets/logo.svg";
 import { FormInput } from "@/components/shared/form-input";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
@@ -35,19 +36,17 @@ export default function LoginPage() {
     setLoginError(null);
 
     try {
-      // TODO: Implement actual admin authentication
-      // For now, this is a placeholder
-      const response = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const supabase = createClient();
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
       });
 
-      if (response.ok) {
-        router.push("/admin");
-      } else {
-        setLoginError("Invalid password. Please try again.");
+      if (error) {
+        setLoginError(error.message || "Invalid password. Please try again.");
       }
+     return router.push("/dashboard");
     } catch (error) {
       setLoginError("An error occurred. Please try again.");
       console.error("Login error:", error);
