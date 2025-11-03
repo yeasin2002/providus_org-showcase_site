@@ -1,26 +1,23 @@
 "use client";
 
+import { useSendEmail } from "@/hooks/useSendEmail";
 import { useState } from "react";
 
 const Send = () => {
   const [email, setEmail] = useState("");
   const [isPending, startTransition] = useState(false);
+  const { sendEmail, data } = useSendEmail();
 
   const handleLogin = async () => {
     try {
       startTransition(true);
 
-      const res = await fetch("/api/email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: email,
-          subject: "Welcome! 2 ",
-          text: "Glad to have you here. my route handle is working",
-        }),
+      const res = await sendEmail({
+        to: email,
+        subject: "Welcome! 2",
+        text: "Glad to have you here. my route handle is working",
       });
-
-      const data = await res.json();
+      console.log("🚀 ~ handleLogin ~ res:", res);
 
       console.log(data);
     } catch (error) {
