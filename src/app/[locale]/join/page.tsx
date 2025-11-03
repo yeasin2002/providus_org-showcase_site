@@ -1,5 +1,5 @@
-import { Footer } from "@/components/shared/footer";
 import { HeroTopArea } from "@/components/shared/hero-top-area";
+import { FooterUpload } from "../upload/footerUpload";
 import { JoinFormSection } from "./join-form";
 
 export default function JoinPage() {
@@ -10,7 +10,7 @@ export default function JoinPage() {
         description="Your work matters. The Providus Alliance gives you a space to share it in detail — so donors and supporters can truly see the heart of your project."
       />
       <JoinFormSection />
-      <Footer />
+      <FooterUpload />
     </div>
   );
 }

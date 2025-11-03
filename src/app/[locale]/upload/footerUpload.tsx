@@ -1,21 +1,13 @@
 import logoImage from "@/assets/logo.svg";
-import { navLinks } from "@/data/menu-list";
 
 import { cn } from "@/lib/utils";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props extends React.ComponentProps<"footer"> {}
 
-export function Footer({ className }: Props) {
+export function FooterUpload({ className }: Props) {
   // const recentPosts = [
   //   {
   //     image:
@@ -47,7 +39,7 @@ export function Footer({ className }: Props) {
     <footer className={cn("w-full bg-black text-white", className)} id="join">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
             {/* Logo */}
@@ -55,26 +47,26 @@ export function Footer({ className }: Props) {
 
             {/* Description */}
             <p className="text-gray-400 text-sm leading-relaxed">
-              Join a worldwide fellowship of churches and open new doors of
-              support for your ministry.
+              Join a worldwide fellowship of churches and open <br /> new doors
+              of support for your ministry.
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3">
-              <Link
+              {/* <Link
                 href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 href="/"
                 className="w-10 h-10 bg-yellow-600 hover:bg-yellow-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
-              </Link>
+              </Link> */}
               <Link
                 href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
@@ -82,18 +74,18 @@ export function Footer({ className }: Props) {
               >
                 <Facebook className="w-5 h-5" />
               </Link>
-              <Link
+              {/* <Link
                 href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </Link>
+              </Link> */}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
+          {/* <div>
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
               {navLinks.map((link) => (
@@ -108,7 +100,7 @@ export function Footer({ className }: Props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact */}
           <div>

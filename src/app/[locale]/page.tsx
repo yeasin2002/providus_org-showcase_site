@@ -1,4 +1,4 @@
-import NGOCTAWithFooter from "@/components/footer/footer";
+import NGOCTAWithFooter from "@/components/footer/NGOCTAWithFooter";
 import Alliance from "@/components/home/allience";
 import HeroSection from "@/components/home/hero-section";
 import MissionsToSupport from "@/components/home/mission/mission-respect";
