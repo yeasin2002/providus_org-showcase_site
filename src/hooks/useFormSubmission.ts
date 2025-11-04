@@ -1,11 +1,14 @@
 import { useState } from "react";
-import type { MathQuestion, ProjectFormData } from "../types";
+import type {
+  MathQuestion,
+  ProjectFormData,
+} from "../app/[locale]/upload/types";
 import {
   checkHoneypot,
   validateInteractionCount,
   validateMathAnswer,
   validateSubmissionTiming,
-} from "../utils";
+} from "../utils/upload-utils";
 
 interface UseFormSubmissionProps {
   formLoadTime: number;
@@ -43,7 +46,7 @@ export function useFormSubmission({
     // 3. Validate math answer
     const mathValidation = validateMathAnswer(
       data.mathAnswer,
-      mathQuestion.answer,
+      mathQuestion.answer
     );
     if (!mathValidation.valid) {
       setTimeWarning(mathValidation.message || "");

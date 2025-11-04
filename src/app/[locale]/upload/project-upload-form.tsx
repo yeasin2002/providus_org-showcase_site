@@ -13,12 +13,16 @@ import { Upload, Video } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useFormSubmission } from "./hooks/useFormSubmission";
-import { useInteractionTracking } from "./hooks/useInteractionTracking";
+import { useFormSubmission } from "../../../hooks/useFormSubmission";
+import { useInteractionTracking } from "../../../hooks/useInteractionTracking";
+import { generateMathQuestion } from "../../../utils/upload-utils";
 import { projectSchema, type ProjectFormData } from "./types";
-import { generateMathQuestion } from "./utils";
 
-export const ProjectUploadForm = () => {
+interface Props extends React.ComponentProps<"div"> {
+  churchesId: string;
+}
+
+export const ProjectUploadForm = ({ churchesId }: Props) => {
   const {
     register,
     handleSubmit,

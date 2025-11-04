@@ -1,4 +1,4 @@
-import type { MathQuestion } from "./types";
+import type { MathQuestion } from "../app/[locale]/upload/types";
 
 export const MIN_SUBMIT_TIME = 3000; // 3 seconds minimum
 export const MIN_INTERACTION_COUNT = 5;
