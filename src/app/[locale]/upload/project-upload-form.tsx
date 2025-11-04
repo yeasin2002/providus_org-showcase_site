@@ -11,152 +11,38 @@ import { countries } from "@/data/countries-data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, Video } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-
-const projectSchema = z.object({
-  projectName: z
-    .string()
-    .min(2, "Project/Church name must be at least 2 characters"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  photo: z.any().refine((files) => files && files.length > 0, {
-    message: "Photo is required",
-  }),
-  video: z.any().optional(),
-  country: z.string().min(1, "Please select your country/region"),
-  contactEmail: z.string().email("Please enter a valid email address"),
-  website: z
-    .string()
-    .url("Please enter a valid URL")
-    .optional()
-    .or(z.literal("")),
-  donationLink: z
-    .string()
-    .url("Please enter a valid URL")
-    .optional()
-    .or(z.literal("")),
-  additionalPhotos: z.string().optional(),
-  mathAnswer: z.string().optional(),
-});
-
-type ProjectFormData = z.infer<typeof projectSchema>;
-
-
+import { useFormSubmission } from "./hooks/useFormSubmission";
+import { useInteractionTracking } from "./hooks/useInteractionTracking";
+import { projectSchema, type ProjectFormData } from "./types";
+import { generateMathQuestion } from "./utils";
 
 export const ProjectUploadForm = () => {
   const {
     register,
     handleSubmit,
     control,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
   });
-  const MIN_SUBMIT_TIME = 3000; // 5 seconds minimum
 
-  // Generate simple math question
-  const generateMathQuestion = () => {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    return { question: `${num1} + ${num2}`, answer: num1 + num2 };
-  };
-
+  // Initialize form state
   const [formLoadTime] = useState<number>(Date.now());
-  const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [timeWarning, setTimeWarning] = useState("");
   const [mathQuestion] = useState(generateMathQuestion());
-  const [interactionCount, setInteractionCount] = useState(0);
 
-  // Track user interactions (real users interact with form)
-  useEffect(() => {
-    const handleInteraction = () => {
-      setInteractionCount((prev) => prev + 1);
-    };
-
-    // Track clicks, typing, mouse movement
-    document.addEventListener("click", handleInteraction);
-    document.addEventListener("keydown", handleInteraction);
-    document.addEventListener("mousemove", handleInteraction);
-
-    return () => {
-      document.removeEventListener("click", handleInteraction);
-      document.removeEventListener("keydown", handleInteraction);
-      document.removeEventListener("mousemove", handleInteraction);
-    };
-  }, []);
-
-  const onSubmit = async (data) => {
-    setSubmitAttempted(true);
-    setTimeWarning("");
-
-    if (data.website) {
-      console.warn("Spam detected: honeypot field filled");
-      return;
-    }
-
-    const timeElapsed = Date.now() - formLoadTime;
-    if (timeElapsed < MIN_SUBMIT_TIME) {
-      setTimeWarning(
-        "Please take a moment to review your information before submitting."
-      );
-      setSubmitAttempted(false);
-      return;
-    }
-    const userAnswer = parseInt(data.mathAnswer || "0", 10);
-    if (userAnswer !== mathQuestion.answer) {
-      setTimeWarning(
-        "Incorrect answer to the security question. Please try again."
-      );
-      setSubmitAttempted(false);
-      return;
-    }
-
-    // 4. Interaction check (bots don't interact naturally)
-    if (interactionCount < 5) {
-      console.warn("Insufficient interaction detected");
-      setTimeWarning("Please review the form before submitting.");
-      setSubmitAttempted(false);
-      return;
-    }
-
-    // 5. Remove honeypot field before sending
-    const { website, mathAnswer: _, ...submitData } = data;
-
-    try {
-      // Your API submission logic here
-      const response = await fetch("/api/join", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...submitData,
-          formLoadTime,
-          submitTime: Date.now(),
-          interactionCount,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Submission failed");
-      }
-
-      const result = await response.json();
-      console.log("Form submitted successfully:", result);
-
-      // Handle success (e.g., show success message, redirect, etc.)
-    } catch (error) {
-      console.error("Submission error:", error);
-      setTimeWarning("An error occurred. Please try again.");
-      setSubmitAttempted(false);
-    }
-  };
-
-  // const onSubmit = async (data: ProjectFormData) => {
-  //   console.log("Form submitted:", data);
-  // };
+  // Custom hooks for form logic
+  const interactionCount = useInteractionTracking();
+  const {
+    handleSubmit: onSubmit,
+    submitAttempted,
+    timeWarning,
+  } = useFormSubmission({
+    formLoadTime,
+    mathQuestion,
+    interactionCount,
+  });
 
   return (
     <section
@@ -201,7 +87,7 @@ export const ProjectUploadForm = () => {
             label="2. Short Description of Your Project:"
             required
             registration={register("description")}
-            error={errors.description as any}
+            error={errors.description}
             rows={6}
           />
         </div>
@@ -220,7 +106,7 @@ export const ProjectUploadForm = () => {
                 maxSize={5 * 1024 * 1024}
                 icon={<Upload className="w-6 h-6 text-[#C4A053]" />}
                 helperText="JPG/PNG Max 5MB — Choose a photo that shows your project activity or church community."
-                error={errors.photo as any}
+                error={errors.photo as never}
                 onChange={(files) => field.onChange(files)}
               />
             )}
@@ -237,7 +123,7 @@ export const ProjectUploadForm = () => {
                 maxSize={50 * 1024 * 1024}
                 icon={<Video className="w-6 h-6 text-[#C4A053]" />}
                 helperText="MP4, Max 50MB — A short introduction or news if you have one."
-                error={errors.video as any}
+                error={errors.video as never}
                 onChange={(files) => field.onChange(files)}
               />
             )}
@@ -254,7 +140,7 @@ export const ProjectUploadForm = () => {
                 maxSize={5 * 1024 * 1024}
                 icon={<Upload className="w-6 h-6 text-[#C4A053]" />}
                 helperText="JPG/PNG/WebP Max 5MB each — You may upload extra photos to show your mission or community."
-                error={errors.additionalPhotos as any}
+                error={errors.additionalPhotos as never}
                 onChange={(files) => field.onChange(files)}
               />
             )}
@@ -350,7 +236,9 @@ export const ProjectUploadForm = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
+                  aria-label="Loading"
                 >
+                  <title>Loading</title>
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -358,12 +246,12 @@ export const ProjectUploadForm = () => {
                     r="10"
                     stroke="currentColor"
                     strokeWidth="4"
-                  ></circle>
+                  />
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                  />
                 </svg>
                 Submitting...
               </span>
