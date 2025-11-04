@@ -38,15 +38,18 @@ export const ProjectUploadForm = ({ churchesId }: Props) => {
 
   // Custom hooks for form logic
   const interactionCount = useInteractionTracking();
-  const {
-    handleSubmit: onSubmit,
-    submitAttempted,
-    timeWarning,
-  } = useFormSubmission({
+  const formSubmission = useFormSubmission({
     formLoadTime,
     mathQuestion,
     interactionCount,
+    churchId: churchesId,
   });
+
+  const {
+    handleSubmit: submitForm,
+    submitAttempted,
+    timeWarning,
+  } = formSubmission;
 
   return (
     <section
@@ -72,7 +75,7 @@ export const ProjectUploadForm = ({ churchesId }: Props) => {
 
       {/* Form */}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitForm)}
         className="border border-gold rounded-2xl p-8 md:p-12 bg-card shadow-sm font-montserrat"
       >
         {/* 1. Project/Church Name */}
