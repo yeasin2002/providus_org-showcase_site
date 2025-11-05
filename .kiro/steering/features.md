@@ -191,9 +191,11 @@ Stores basic church information from join form (managed by landing site)
 - `id` (uuid, primary key)
 - `church_name` (text)
 - `contact_name` (text)
-- `email` (text, private)
+- `email` (text, private, unique - used as church identifier)
 - `country` (text)
 - `status` (enum: 'joined', 'submitted', 'pending', 'approved', 'rejected')
+- `monthly_submission_count` (integer, default: 0)
+- `last_submission_reset` (timestamp)
 - `created_at` (timestamp)
 - `updated_at` (timestamp)
 
@@ -215,6 +217,9 @@ Stores mission stories and project details
 - `submitted_at` (timestamp)
 - `approved_at` (timestamp, nullable)
 - `approved_by` (text, admin identifier)
+- `archived` (boolean, default: false)
+- `archived_at` (timestamp, nullable)
+- `deleted_by_church` (boolean, default: false)
 - `created_at` (timestamp)
 - `updated_at` (timestamp)
 
@@ -249,6 +254,43 @@ Stores generated PDF certificates
 - Naming: `cert-{certificate_id}.pdf`
 - Publicly accessible via unique link
 
+## Project Submission Rules
+
+### Church Identity & Profile Management
+
+- **Church Identification:** Each church is uniquely identified by their email address
+- **Consistent Profile:** The same email always connects to the same church profile
+- **Private Link Access:** Churches access their profile via a unique private link (token-based)
+
+### Project Limits
+
+#### Active Project Limit
+- **Maximum:** 5 active projects per church (approved + pending combined)
+- **Enforcement:** Churches must archive or delete an existing project before adding a new one if at limit
+- **Archived projects:** Do not count toward the active limit
+
+#### Monthly Submission Limit
+- **Maximum:** 3 new project submissions per month
+- **Configurable:** This limit can be adjusted in the database configuration
+- **Reset:** Counter resets automatically at the start of each month
+- **Enforcement:** Churches cannot submit new projects if monthly limit is reached
+
+### Project Management by Churches
+
+#### Project Deletion/Archiving
+- Churches can initiate deletion of their own projects via their private link
+- **Implementation options:**
+  1. **Soft delete (recommended):** Move project to archived state (`archived = true`)
+  2. **Hard delete:** Fully remove record from database
+- **Tracking:** System tracks if deletion was church-initiated (`deleted_by_church = true`)
+- **Media files:** Remain in storage for archived projects (can be cleaned up later)
+
+#### Validation Flow
+1. Check if church has reached 5 active projects
+2. Check if church has submitted 3 projects this month
+3. If either limit is reached, show error with guidance
+4. Suggest archiving old projects or waiting until next month
+
 ## Media Guidelines
 
 ### Photo Requirements
@@ -281,6 +323,7 @@ Stores generated PDF certificates
 - Enforce size limits
 - Scan for malicious content (if possible)
 - Reject invalid files with clear error messages
+- Validate project limits before allowing upload
 
 ## Email Integration (Brevo)
 
