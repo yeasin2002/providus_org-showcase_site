@@ -20,9 +20,15 @@ import { projectSchema, type ProjectFormData } from "./types";
 
 interface Props extends React.ComponentProps<"div"> {
   churchesId: string;
+  churchName: string;
+  contact_email: string;
 }
 
-export const ProjectUploadForm = ({ churchesId }: Props) => {
+export const ProjectUploadForm = ({
+  churchesId,
+  churchName,
+  contact_email,
+}: Props) => {
   const {
     register,
     handleSubmit,
@@ -43,6 +49,8 @@ export const ProjectUploadForm = ({ churchesId }: Props) => {
     mathQuestion,
     interactionCount,
     churchId: churchesId,
+    churchName: churchName,
+    contact_email: contact_email,
   });
 
   const {

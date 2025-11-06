@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type {
   MathQuestion,
@@ -16,12 +17,15 @@ import {
   validateMathAnswer,
   validateSubmissionTiming,
 } from "../utils/upload-utils";
+import { sendConfirmationEmail } from "./send-confirmation-email";
 
 interface UseFormSubmissionProps {
   formLoadTime: number;
   mathQuestion: MathQuestion;
   interactionCount: number;
   churchId: string;
+  churchName: string;
+  contact_email: string;
 }
 
 /**
@@ -32,9 +36,12 @@ export function useFormSubmission({
   mathQuestion,
   interactionCount,
   churchId,
+  churchName,
+  contact_email,
 }: UseFormSubmissionProps) {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [timeWarning, setTimeWarning] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (data: ProjectFormData) => {
     setSubmitAttempted(true);
@@ -51,7 +58,7 @@ export function useFormSubmission({
     // Step 2: Validate math answer (CAPTCHA)
     const mathValidation = validateMathAnswer(
       data.mathAnswer,
-      mathQuestion.answer,
+      mathQuestion.answer
     );
     if (!mathValidation.valid) {
       setTimeWarning(mathValidation.message || "");
@@ -83,7 +90,7 @@ export function useFormSubmission({
       const mainPhotoFile = data.photo[0] as File;
       const mainPhotoUrl = await uploadFile(
         mainPhotoFile,
-        getPhotoFolder(churchId),
+        getPhotoFolder(churchId)
       );
 
       if (!mainPhotoUrl) {
@@ -109,7 +116,7 @@ export function useFormSubmission({
         const additionalFiles = data.additionalPhotos as File[];
         additionalPhotosUrls = await uploadMultipleFiles(
           additionalFiles,
-          getAdditionalPhotosFolder(churchId),
+          getAdditionalPhotosFolder(churchId)
         );
       }
 
@@ -119,7 +126,7 @@ export function useFormSubmission({
         data,
         mainPhotoUrl,
         videoUrl,
-        additionalPhotosUrls,
+        additionalPhotosUrls
       );
 
       if (!projectData) {
@@ -130,8 +137,10 @@ export function useFormSubmission({
 
       console.log("Project submitted successfully:", projectData);
 
-      // Success - keep submitAttempted true to show success state
-      return projectData;
+      // Step 8: Send confirmation email to church
+      await sendConfirmationEmail({ churchName, data, contact_email });
+      router.push("/thanks");
+      // return projectData;
     } catch (error) {
       console.error("Submission error:", error);
       setTimeWarning("An error occurred. Please try again.");
