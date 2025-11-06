@@ -8,6 +8,8 @@ const Dashboard = async () => {
     .from("projects")
     .select("*")
     .eq("status", "pending");
+    
+
 
   return (
     <div className="container mx-auto p-8">
@@ -28,8 +30,7 @@ const Dashboard = async () => {
             <ProjectApprovalCard
               key={project.id}
               project={project}
-              // onApprove={(id) => console.log("Approve:", id)}
-              // onReject={(id) => console.log("Reject:", id)}
+
             />
           ))}
         </div>

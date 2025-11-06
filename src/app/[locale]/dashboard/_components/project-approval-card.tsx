@@ -21,8 +21,19 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, CheckCircle, ExternalLink, XCircle } from "lucide-react";
+import { supabase } from "@/utils/supabase/client";
+import {
+  Calendar,
+  CheckCircle,
+  Edit,
+  ExternalLink,
+  Loader2,
+  XCircle,
+} from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 type Project = {
   id: string;
@@ -44,15 +55,15 @@ type Project = {
 
 type ProjectApprovalCardProps = {
   project: Project;
-  onApprove?: (projectId: string) => void;
-  onReject?: (projectId: string) => void;
+  // onApprove?: (projectId: string) => void;
+  // onReject?: (projectId: string) => void;
 };
 
-export const ProjectApprovalCard = ({
-  project,
-  onApprove,
-  onReject,
-}: ProjectApprovalCardProps) => {
+export const ProjectApprovalCard = ({ project }: ProjectApprovalCardProps) => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isApproving, setIsApproving] = useState(false);
+  const [isRejecting, setIsRejecting] = useState(false);
   const additionalPhotos = project.additional_photos
     ? JSON.parse(project.additional_photos)
     : [];
@@ -64,9 +75,45 @@ export const ProjectApprovalCard = ({
       day: "numeric",
     });
   };
+  const handleApproveAndReject = async (type: "approved" | "rejected") => {
+    if (type === "approved") {
+      setIsApproving(true);
+    } else {
+      setIsRejecting(true);
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("projects")
+        .update({ status: type, approved_at: new Date() })
+        .eq("id", project.id);
+      console.log("🚀 ~ handleApproveAndReject ~ data:", data);
+
+      if (error) throw error;
+
+      toast.success(
+        `Project ${type === "approved" ? "approved" : "rejected"} successfully`
+      );
+
+      // Close the dialog
+      setOpen(false);
+
+      // Refresh server component data
+      router.refresh();
+    } catch (error) {
+      console.log("🚀 ~ handleApproveAndReject ~ error:", error);
+      toast.error("Failed to update project status");
+    } finally {
+      if (type === "approved") {
+        setIsApproving(false);
+      } else {
+        setIsRejecting(false);
+      }
+    }
+  };
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden pt-0">
       <div className="relative h-48 w-full">
         <Image
           src={project.main_photo_url}
@@ -94,9 +141,10 @@ export const ProjectApprovalCard = ({
           {formatDate(project.submitted_at)}
         </div>
 
-        <AlertDialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm">
+            <Button size="sm" className="cursor-pointer">
+              <Edit />
               Review
             </Button>
           </AlertDialogTrigger>
@@ -200,17 +248,17 @@ export const ProjectApprovalCard = ({
                 {additionalPhotos.length > 0 && (
                   <div>
                     <h3 className="font-semibold mb-2">Additional Photos</h3>
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="space-y-4">
                       {additionalPhotos.map((photoUrl: string) => (
                         <div
                           key={photoUrl}
-                          className="relative h-24 rounded-lg overflow-hidden"
+                          className="relative min-h-24 rounded-lg overflow-hidden h-56"
                         >
                           <Image
                             src={photoUrl}
                             alt="Additional photo"
                             fill
-                            className="object-cover"
+                            className="object-cover aspect-video"
                           />
                         </div>
                       ))}
@@ -231,15 +279,32 @@ export const ProjectApprovalCard = ({
               <AlertDialogCancel>Close</AlertDialogCancel>
               <Button
                 variant="destructive"
-                onClick={() => onReject?.(project.id)}
+                onClick={() => handleApproveAndReject("rejected")}
                 className="gap-2"
+                disabled={isRejecting}
               >
-                <XCircle className="h-4 w-4" />
-                Reject
+                {isRejecting ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    <XCircle className="h-4 w-4" />
+                    Reject
+                  </>
+                )}
               </Button>
-              <Button onClick={() => onApprove?.(project.id)} className="gap-2">
-                <CheckCircle className="h-4 w-4" />
-                Approve
+              <Button
+                onClick={() => handleApproveAndReject("approved")}
+                className="gap-2"
+                disabled={isApproving}
+              >
+                {isApproving ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    <CheckCircle className="h-4 w-4" />
+                    Approve
+                  </>
+                )}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
