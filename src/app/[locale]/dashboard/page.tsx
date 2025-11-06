@@ -9,7 +9,6 @@ const Dashboard = async () => {
     .select("*")
     .eq("status", "pending");
 
-  console.log("🚀 ~ Dashboard ~ projects:", projects);
 
   return (
     <div className="container mx-auto p-8">
