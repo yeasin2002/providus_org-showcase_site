@@ -1,5 +1,6 @@
 import mainImg from "@/assets/fellowshipMain.png";
 import { CTAButton, PrimaryButton } from "@/components/shared/buttons";
+import { NEXT_PUBLIC_LANDING_PAGE_URL } from "@/utils/Env";
 import Image from "next/image";
 
 export default function Alliance() {
@@ -46,7 +47,7 @@ export default function Alliance() {
                 sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
             </div>
-            <a href="#share">
+            <a href={`${NEXT_PUBLIC_LANDING_PAGE_URL}/join`} target="_blank">
               <CTAButton>Share My Church’s Story Today</CTAButton>
             </a>
           </div>

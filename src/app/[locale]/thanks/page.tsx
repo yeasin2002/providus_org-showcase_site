@@ -1,11 +1,14 @@
 import logo from "@/assets/logo-dark.svg";
 import { CTAButton } from "@/components/shared/buttons";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-white container mx-auto font-montserrat py-10">
-      <Image src={logo} alt="Logo" />
+      <Link href="/">
+        <Image src={logo} alt="Logo" />
+      </Link>
 
       {/* Main Thank You Section */}
       <section className="flex flex-col items-center justify-center pt-20 pb-16 px-6">

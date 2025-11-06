@@ -1,8 +1,14 @@
 import bgImag from "@/assets/background.jpg";
 import logo from "@/assets/logo.svg";
+import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
+  const supabase = await createClient();
+  const { data: session } = await supabase.auth.getSession();
+  if (session.session) return redirect("/dashboard");
+
   return (
     <div className="min-h-screen flex font-montserrat">
       <div
