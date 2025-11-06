@@ -9,7 +9,6 @@ const Dashboard = async () => {
     .select("*")
     .eq("status", "pending");
 
-
   return (
     <div className="container mx-auto p-8">
       <div className="mb-8">

@@ -1,11 +1,15 @@
 "use client";
+
 import Link from "next/link";
 // import { Logo } from "@/components/logo";
 import logo from "@/assets/logo-dark.svg";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/utils/supabase/client";
 import { LogOut as LogOutIcon } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 // const menuItems = [
 //   { name: "Features", href: "#link" },
@@ -15,6 +19,18 @@ import Image from "next/image";
 // ];
 
 export const DashboardHeader = () => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success("Logout successfully");
+     return  router.push("/login");
+    } catch (error) {
+      console.log("🚀 ~ handleLogout ~ error:", error);
+      toast.error("Logout failed");
+    }
+  };
   return (
     <header className="border-b border-gray-200">
       <nav
@@ -31,7 +47,7 @@ export const DashboardHeader = () => {
             <Image src={logo} alt="logo" className="size-20" />
           </Link>
 
-          <Button>
+          <Button onClick={handleLogout} className="cursor-pointer">
             <LogOutIcon className="size-5" />
             <span>Logout</span>
           </Button>

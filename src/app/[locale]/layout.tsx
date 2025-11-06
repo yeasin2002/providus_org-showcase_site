@@ -1,8 +1,9 @@
+import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import "./../globals.css";
-import { routing } from "@/i18n/routing";
+import { RootLayoutWrapper } from "./root-layout";
 
 export const metadata: Metadata = {
   title: "ICSA",
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${fontVariables}  antialiased`}>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <RootLayoutWrapper>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </RootLayoutWrapper>
       </body>
     </html>
   );
