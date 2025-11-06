@@ -3,7 +3,11 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 
-export const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export const RootLayoutWrapper = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <>
       <Toaster />

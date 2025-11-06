@@ -3,6 +3,7 @@ import { fontVariables } from "@/lib/fonts";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import "./../globals.css";
+import { RootLayoutWrapper } from "./root-layout";
 
 export const metadata: Metadata = {
   title: "ICSA",
@@ -17,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${fontVariables}  antialiased`}>
-        <RootLayout>
+        <RootLayoutWrapper>
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
-        </RootLayout>
+        </RootLayoutWrapper>
       </body>
     </html>
   );
