@@ -92,6 +92,3 @@
     @apply bg-background text-foreground font-montserrat scroll-smooth;
   }
 }
-@html {
-  scroll-behavior: smooth;
-}
