@@ -5,7 +5,10 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [{ hostname: "images.unsplash.com" }],
+    remotePatterns: [
+      { hostname: "images.unsplash.com" },
+      { hostname: "elzgwgkeskekvohwnewa.supabase.co" },
+    ],
   },
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === "production",

@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";
-import { DashboardHeader } from "./dashboard-heading";
+import { DashboardHeader } from "./_components";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const supabase = await createClient();
