@@ -21,15 +21,15 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { Project } from "@/types";
+import type { Churches } from "@/types";
 import { Calendar, Edit, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 type ProjectApprovalCardProps = {
-  project: Project;
+  project: Churches;
   render: (
-    project: Project,
+    project: Churches,
     setOpen: (open: boolean) => void
   ) => React.ReactNode;
 };

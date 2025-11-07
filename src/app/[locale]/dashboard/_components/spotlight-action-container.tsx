@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import type { Project } from "@/types";
+import type { Churches } from "@/types";
 import { supabase } from "@/utils/supabase/client";
 import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { ProjectActionCard } from ".";
 
 interface SpotlightActionContainerProps {
-  projects: Project[];
+  projects: Churches[];
 }
 
 export const SpotlightActionContainer = ({
@@ -29,7 +29,7 @@ export const SpotlightActionContainer = ({
   );
 };
 
-const PendingAction = (project: Project, setOpen: (open: boolean) => void) => {
+const PendingAction = (project: Churches, setOpen: (open: boolean) => void) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 

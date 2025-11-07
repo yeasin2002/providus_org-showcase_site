@@ -2,36 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { Project } from "@/types";
 import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { useState } from "react";
 
-interface Mission {
-  mainImage: StaticImageData;
-  extraImages?: StaticImageData[];
-  churchName: string;
-  projectTitle: string;
-  country: string;
-  category: string;
-  shortDescription: string;
-  fullDescription: string;
-  videoUrl?: string;
-  contactEmail?: string;
-  website?: string;
-  donationLink?: string;
-}
-
-
-
 interface MissionCardProps {
-  mission: Mission;
+  mission: Project;
 }
 
 export function MissionCard({ mission }: MissionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const allImages = [mission.mainImage, ...(mission.extraImages || [])];
+  const allImages = [
+    mission.main_photo_url,
+    ...(mission?.additional_photo || []),
+  ];
   const hasMultipleImages = allImages.length > 1;
 
   const nextImage = () => {
@@ -46,12 +33,12 @@ export function MissionCard({ mission }: MissionCardProps) {
 
   // Truncate short description to 200-250 characters
   const truncatedDescription =
-    mission.shortDescription.length > 250
-      ? mission.shortDescription.substring(0, 247) + "..."
-      : mission.shortDescription;
+    mission?.short_description?.length > 250
+      ? mission?.short_description?.substring(0, 247) + "..."
+      : mission.short_description;
 
   // Generate unique ID for this card
-  const cardId = `mission-card-${mission.projectTitle
+  const cardId = `mission-card-${mission.project_name
     .toLowerCase()
     .replace(/\s+/g, "-")}`;
 
@@ -81,8 +68,10 @@ export function MissionCard({ mission }: MissionCardProps) {
       {/* Image Container */}
       <div className="relative h-56 overflow-hidden group">
         <Image
-          src={mission.mainImage}
-          alt={mission.projectTitle}
+          src={mission.main_photo_url}
+          alt={mission.project_name}
+          width={500}
+          height={500}
           className="w-full h-full object-cover"
         />
       </div>
@@ -92,18 +81,18 @@ export function MissionCard({ mission }: MissionCardProps) {
         {/* Category Badge */}
         <div className="mb-3">
           <Button className="text-white bg-gold hover:bg-gold/90 h-7 text-xs px-3 pointer-events-none">
-            {mission.category}
+            {mission.churches.name}
           </Button>
         </div>
 
         {/* Church Name */}
         <h3 className="text-xl font-bold text-gray-900 mb-2">
-          {mission.churchName}
+          {mission.project_name}
         </h3>
 
         {/* Project Title */}
         <h4 className="text-lg font-semibold text-gray-700 mb-2">
-          {mission.projectTitle}
+          {mission.project_name}
         </h4>
 
         {/* Country/Region */}
@@ -129,7 +118,7 @@ export function MissionCard({ mission }: MissionCardProps) {
                 About This Mission
               </h5>
               <p className="text-gray-600 text-base whitespace-pre-line leading-relaxed">
-                {mission.fullDescription}
+                {mission.short_description}
               </p>
             </div>
 
@@ -143,10 +132,12 @@ export function MissionCard({ mission }: MissionCardProps) {
                   <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
                     <Image
                       src={allImages[currentImageIndex]}
-                      alt={`${mission.projectTitle} - Image ${
+                      alt={`${mission.project_name} - Image ${
                         currentImageIndex + 1
                       }`}
                       className="w-full h-full object-cover"
+                      width={500}
+                      height={500}
                     />
                   </div>
 
@@ -176,7 +167,7 @@ export function MissionCard({ mission }: MissionCardProps) {
                 <div className="flex gap-2 mt-3 overflow-x-auto">
                   {allImages.map((img, idx) => (
                     <button
-                      key={`thumb-${mission.projectTitle}-${idx}`}
+                      key={`thumb-${mission.project_name}-${idx}`}
                       type="button"
                       onClick={() => setCurrentImageIndex(idx)}
                       className={cn(
@@ -186,11 +177,13 @@ export function MissionCard({ mission }: MissionCardProps) {
                           : "border-transparent opacity-60 hover:opacity-100"
                       )}
                     >
-                      <Image
+                      {/* <Image
                         src={img}
                         alt={`Thumbnail ${idx + 1}`}
                         className="w-full h-full object-cover"
-                      />
+                        width={500}
+                        height={500}
+                      /> */}
                     </button>
                   ))}
                 </div>
@@ -198,16 +191,16 @@ export function MissionCard({ mission }: MissionCardProps) {
             )}
 
             {/* Video if available */}
-            {mission.videoUrl && (
+            {mission.video_url && (
               <div>
                 <h5 className="font-semibold text-gray-900 mb-3 text-lg">
                   Video
                 </h5>
                 <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                  {mission.videoUrl.includes("youtube.com") ||
-                  mission.videoUrl.includes("youtu.be") ? (
+                  {mission.video_url.includes("youtube.com") ||
+                  mission.video_url.includes("youtu.be") ? (
                     <iframe
-                      src={mission.videoUrl}
+                      src={mission.video_url}
                       title="Mission video"
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -215,7 +208,7 @@ export function MissionCard({ mission }: MissionCardProps) {
                     />
                   ) : (
                     <video
-                      src={mission.videoUrl}
+                      src={mission.video_url}
                       controls
                       className="w-full h-full"
                     >
@@ -232,41 +225,41 @@ export function MissionCard({ mission }: MissionCardProps) {
                 Contact This Mission
               </h5>
               <div className="space-y-3">
-                {mission.contactEmail && (
+                {mission.churches.contact_email && (
                   <div className="flex items-start gap-2">
                     <span className="text-gray-600 font-medium min-w-[80px]">
                       Email:
                     </span>
                     <a
-                      href={`mailto:${mission.contactEmail}`}
+                      href={`mailto:${mission.churches.contact_email}`}
                       className="text-gold hover:underline break-all"
                     >
-                      {mission.contactEmail}
+                      {mission.churches.contact_email}
                     </a>
                   </div>
                 )}
-                {mission.website && (
+                {mission.churches.website && (
                   <div className="flex items-start gap-2">
                     <span className="text-gray-600 font-medium min-w-[80px]">
                       Website:
                     </span>
                     <a
-                      href={mission.website}
+                      href={mission.churches.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gold hover:underline break-all"
                     >
-                      {mission.website}
+                      {mission.churches.website}
                     </a>
                   </div>
                 )}
-                {mission.donationLink && (
+                {mission.donation_link && (
                   <div className="flex items-start gap-2">
                     <span className="text-gray-600 font-medium min-w-[80px]">
                       Donate:
                     </span>
                     <a
-                      href={mission.donationLink}
+                      href={mission.donation_link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gold hover:underline break-all"

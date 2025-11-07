@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import type { Project } from "@/types";
+import type { Churches } from "@/types";
 import { supabase } from "@/utils/supabase/client";
 import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { ProjectActionCard } from ".";
 
 interface ShowPendingProjectsProps {
-  projects: Project[];
+  projects: Churches[];
 }
 
 export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
@@ -27,10 +27,7 @@ export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
   );
 };
 
-export const PendingAction = (
-  project: Project,
-  setOpen: (open: boolean) => void
-) => {
+export const PendingAction = (project: Churches, setOpen: (open: boolean) => void) => {
   const router = useRouter();
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
