@@ -1,37 +1,19 @@
-"use client";
-
-import { MissionCard } from "@/components/home/mission/mission-card";
 import { Heading } from "@/components/shared/headingt";
-import { spotlight } from "@/data/spotlight.data";
-import { useState } from "react";
+// import { spotlight } from "@/data/spotlight.data";
+import { createClient } from "@/utils/supabase/server";
+import { SpotLightCard } from "./sportlight-card";
 
-export default function Spotlight() {
-  const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
-    null,
-  );
+export default async function Spotlight() {
+  const supabase = await createClient();
+  const { data: spotlight } = await supabase
+    .from("churches")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(6);
 
-  const handleCardToggle = (index: number) => {
-    const isClosing = expandedCardIndex === index;
-    setExpandedCardIndex(isClosing ? null : index);
-
-    // If closing, scroll back to the card after a brief delay
-    if (isClosing) {
-      const mission = spotlight[index];
-      const cardId = `mission-card-${mission.projectTitle
-        .toLowerCase()
-        .replace(/\s+/g, "-")}`;
-
-      setTimeout(() => {
-        const element = document.getElementById(cardId);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-        }
-      }, 100);
-    }
-  };
+  if (!spotlight || spotlight.length === 0) {
+    return null;
+  }
 
   return (
     <section
@@ -43,13 +25,8 @@ export default function Spotlight() {
 
         {/* Spotlight Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {spotlight.map((mission, index) => (
-            <MissionCard
-              key={mission.projectTitle}
-              mission={mission}
-              isExpanded={expandedCardIndex === index}
-              onToggle={() => handleCardToggle(index)}
-            />
+          {spotlight.map((church) => (
+            <SpotLightCard key={church.id} item={church} />
           ))}
         </div>
       </div>
