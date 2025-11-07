@@ -59,17 +59,17 @@ export function MissionCard({ mission }: MissionCardProps) {
     const isClosing = isExpanded;
     setIsExpanded(!isExpanded);
 
-    // If closing, scroll back to the card after a brief delay
+    // If closing, scroll back to the card top after animation completes
     if (isClosing) {
       setTimeout(() => {
         const element = document.getElementById(cardId);
         if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
+          const yOffset = -100; // Offset from top (adjust for header/navbar)
+          const y =
+            element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
         }
-      }, 100);
+      }, 350); // Wait for collapse animation to complete (300ms + buffer)
     }
   };
 
