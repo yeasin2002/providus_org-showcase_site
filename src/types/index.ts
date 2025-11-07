@@ -14,4 +14,5 @@ export type Project = {
   church_website: string;
   donation_link: string;
   status: string;
+  is_spotlight: boolean;
 };

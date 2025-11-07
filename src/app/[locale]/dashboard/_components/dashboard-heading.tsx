@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const menuItems = [
-  { name: "Home", href: "/" },
+  { name: "Home", href: "/dashboard" },
   { name: "Spotlight", href: "/dashboard/spotlight" },
 ];
 
