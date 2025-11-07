@@ -10,7 +10,6 @@ import {
   getPhotoFolder,
   getVideoFolder,
   uploadFile,
-  uploadMultipleFiles,
 } from "../utils/supabase-upload";
 import {
   validateInteractionCount,
@@ -106,16 +105,11 @@ export function useFormSubmission({
         videoUrl = await uploadFile(videoFile, getVideoFolder(churchId));
       }
 
-      // Step 6: Upload additional photos (optional)
-      let additionalPhotosUrls: string[] = [];
-      if (
-        data.additionalPhotos &&
-        Array.isArray(data.additionalPhotos) &&
-        data.additionalPhotos.length > 0
-      ) {
-        const additionalFiles = data.additionalPhotos as File[];
-        additionalPhotosUrls = await uploadMultipleFiles(
-          additionalFiles,
+      // Step 6: Upload additional photo (optional)
+      let additionalPhotoUrl: string | null = null;
+      if (data.additionalPhotos && data.additionalPhotos instanceof File) {
+        additionalPhotoUrl = await uploadFile(
+          data.additionalPhotos,
           getAdditionalPhotosFolder(churchId)
         );
       }
@@ -126,7 +120,7 @@ export function useFormSubmission({
         data,
         mainPhotoUrl,
         videoUrl,
-        additionalPhotosUrls
+        additionalPhotoUrl
       );
 
       if (!projectData) {

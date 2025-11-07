@@ -86,7 +86,7 @@ projects {
   short_description: TEXT
   main_photo_url: TEXT
   video_url: TEXT (nullable)
-  additional_photos: TEXT[] (nullable)
+  additional_photo: TEXT[] (nullable)
   church_email: TEXT
   church_website: TEXT (nullable)
   donation_link: TEXT (nullable)

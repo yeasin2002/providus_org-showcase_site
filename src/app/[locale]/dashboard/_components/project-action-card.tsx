@@ -21,15 +21,15 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { Churches } from "@/types";
+import type { Project } from "@/types";
 import { Calendar, Edit, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 type ProjectApprovalCardProps = {
-  project: Churches;
+  project: Project;
   render: (
-    project: Churches,
+    project: Project,
     setOpen: (open: boolean) => void
   ) => React.ReactNode;
 };
@@ -39,9 +39,6 @@ export const ProjectActionCard = ({
   render,
 }: ProjectApprovalCardProps) => {
   const [open, setOpen] = useState(false);
-  const additionalPhotos = project.additional_photo
-    ? JSON.parse(project.additional_photo)
-    : [];
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -183,11 +180,10 @@ export const ProjectActionCard = ({
                   </div>
                 )}
 
-                {/* Additional Photos */}
-                {additionalPhotos.length > 0 && (
+                {/* {additionalPhotos.length > 0 && (
                   <div>
                     <h3 className="font-semibold mb-2">Additional Photos</h3>
-                    <div className="space-y-4">
+                    
                       {additionalPhotos.map((photoUrl: string) => (
                         <div
                           key={photoUrl}
@@ -203,7 +199,7 @@ export const ProjectActionCard = ({
                       ))}
                     </div>
                   </div>
-                )}
+                )} */}
 
                 <div>
                   <h3 className="font-semibold mb-1">Submitted</h3>

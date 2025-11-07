@@ -12,6 +12,7 @@ export default async function MissionsToSupport() {
     .eq("status", "approved")
     .eq("is_spotlight", false)
     .order("approved_at", { ascending: false });
+  console.log("🚀 ~ MissionsToSupport ~ missions:", missions);
 
   if (!missions || missions.length === 0) return null;
 

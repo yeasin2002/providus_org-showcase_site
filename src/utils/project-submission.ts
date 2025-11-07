@@ -8,7 +8,7 @@ import type { ProjectFormData } from "../app/[locale]/upload/types";
  * @param formData - The form data from the user
  * @param mainPhotoUrl - URL of the uploaded main photo
  * @param videoUrl - URL of the uploaded video (optional)
- * @param additionalPhotosUrls - Array of URLs for additional photos (optional)
+ * @param additionalPhotoUrl - URL for additional photo (optional)
  * @returns The created project data or null if failed
  */
 export async function insertProject(
@@ -16,7 +16,7 @@ export async function insertProject(
   formData: ProjectFormData,
   mainPhotoUrl: string,
   videoUrl: string | null,
-  additionalPhotosUrls: string[]
+  additionalPhotoUrl: string | null
 ) {
   const supabase = createClient();
 
@@ -30,8 +30,7 @@ export async function insertProject(
       video_url: videoUrl,
       language: "en", // Default to English
       country: formData.country,
-      additional_photo:
-        additionalPhotosUrls.length > 0 ? additionalPhotosUrls : null,
+      additional_photo: additionalPhotoUrl,
       church_email: formData.contactEmail,
       church_website: formData.website || null,
       donation_link: formData.donationLink || null,

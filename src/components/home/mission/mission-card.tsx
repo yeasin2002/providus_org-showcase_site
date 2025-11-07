@@ -13,23 +13,6 @@ interface MissionCardProps {
 
 export function MissionCard({ mission }: MissionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const allImages = [
-    mission.main_photo_url,
-    ...(mission?.additional_photo || []),
-  ];
-  const hasMultipleImages = allImages.length > 1;
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex(
-      (prev) => (prev - 1 + allImages.length) % allImages.length
-    );
-  };
 
   // Truncate short description to 200-250 characters
   const truncatedDescription =
@@ -122,73 +105,13 @@ export function MissionCard({ mission }: MissionCardProps) {
               </p>
             </div>
 
-            {/* Photo Gallery (if multiple images) */}
-            {hasMultipleImages && (
-              <div>
-                <h5 className="font-semibold text-gray-900 mb-3 text-lg">
-                  Photo Gallery
-                </h5>
-                <div className="relative">
-                  <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                    <Image
-                      src={allImages[currentImageIndex]}
-                      alt={`${mission.project_name} - Image ${
-                        currentImageIndex + 1
-                      }`}
-                      className="w-full h-full object-cover"
-                      width={500}
-                      height={500}
-                    />
-                  </div>
-
-                  {/* Carousel Controls */}
-                  <button
-                    type="button"
-                    onClick={prevImage}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronUp className="w-5 h-5 -rotate-90" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextImage}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronDown className="w-5 h-5 -rotate-90" />
-                  </button>
-
-                  {/* Image Counter */}
-                  <div className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {currentImageIndex + 1} / {allImages.length}
-                  </div>
-                </div>
-
-                {/* Thumbnail Navigation */}
-                <div className="flex gap-2 mt-3 overflow-x-auto">
-                  {allImages.map((img, idx) => (
-                    <button
-                      key={`thumb-${mission.project_name}-${idx}`}
-                      type="button"
-                      onClick={() => setCurrentImageIndex(idx)}
-                      className={cn(
-                        "shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
-                        currentImageIndex === idx
-                          ? "border-gold"
-                          : "border-transparent opacity-60 hover:opacity-100"
-                      )}
-                    >
-                      {/* <Image
-                        src={img}
-                        alt={`Thumbnail ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                        width={500}
-                        height={500}
-                      /> */}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+            <Image
+              src={mission.additional_photo}
+              alt={mission.project_name}
+              className="w-full h-full object-cover"
+              width={500}
+              height={500}
+            />
 
             {/* Video if available */}
             {mission.video_url && (

@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+
 export type Church = {
   id: string;
   name: string;
@@ -15,13 +17,13 @@ export interface Project {
   church_id: string;
   project_name: string;
   short_description: string;
-  main_photo_url: string;
+  main_photo_url: StaticImageData;
   video_url: string;
   language: string;
   country: string;
   submitted_at: string;
   approved_at: string;
-  additional_photo: string;
+  additional_photo: StaticImageData;
   church_email: string;
   church_website: string;
   donation_link: string;
