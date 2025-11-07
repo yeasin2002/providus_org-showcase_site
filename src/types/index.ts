@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+
 export type Project = {
   id: string;
   church_id: string;
@@ -16,3 +18,18 @@ export type Project = {
   status: string;
   is_spotlight: boolean;
 };
+
+export interface Mission {
+  mainImage: StaticImageData;
+  extraImages?: StaticImageData[];
+  churchName: string;
+  projectTitle: string;
+  country: string;
+  category: string;
+  shortDescription: string;
+  fullDescription: string;
+  videoUrl?: string;
+  contactEmail?: string;
+  website?: string;
+  donationLink?: string;
+}
