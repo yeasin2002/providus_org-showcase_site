@@ -11,12 +11,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-// const menuItems = [
-//   { name: "Features", href: "#link" },
-//   { name: "Solution", href: "#link" },
-//   { name: "Pricing", href: "#link" },
-//   { name: "About", href: "#link" },
-// ];
+const menuItems = [
+  { name: "Home", href: "/" },
+  { name: "Spotlight", href: "/dashboard/spotlight" },
+];
 
 export const DashboardHeader = () => {
   const router = useRouter();
@@ -25,7 +23,7 @@ export const DashboardHeader = () => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast.success("Logout successfully");
-     return  router.push("/login");
+      return router.push("/login");
     } catch (error) {
       console.log("🚀 ~ handleLogout ~ error:", error);
       toast.error("Logout failed");
@@ -46,6 +44,20 @@ export const DashboardHeader = () => {
           >
             <Image src={logo} alt="logo" className="size-20" />
           </Link>
+          <div className="hidden lg:block">
+            <ul className="flex gap-8 text-sm">
+              {menuItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                  >
+                    <span>{item.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <Button onClick={handleLogout} className="cursor-pointer">
             <LogOutIcon className="size-5" />

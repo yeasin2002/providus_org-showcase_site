@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { ProjectApprovalCard } from "./_components";
+import { ShowPendingProjects } from "./_components/show-pending-projects";
 
 const Dashboard = async () => {
   const supabase = await createClient();
@@ -8,8 +8,7 @@ const Dashboard = async () => {
     .from("projects")
     .select("*")
     .eq("status", "pending");
-    
-
+  console.log("🚀 ~ Dashboard ~ projects:", projects);
 
   return (
     <div className="container mx-auto p-8">
@@ -25,15 +24,7 @@ const Dashboard = async () => {
           <p className="text-muted-foreground">No pending projects to review</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.map((project) => (
-            <ProjectApprovalCard
-              key={project.id}
-              project={project}
-
-            />
-          ))}
-        </div>
+        <ShowPendingProjects projects={projects} />
       )}
     </div>
   );

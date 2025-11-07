@@ -30,7 +30,7 @@ export async function insertProject(
       video_url: videoUrl,
       language: "en", // Default to English
       country: formData.country,
-      additional_photos:
+      additional_photo:
         additionalPhotosUrls.length > 0 ? additionalPhotosUrls : null,
       church_email: formData.contactEmail,
       church_website: formData.website || null,

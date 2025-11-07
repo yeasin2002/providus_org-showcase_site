@@ -21,51 +21,26 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/utils/supabase/client";
-import {
-  Calendar,
-  CheckCircle,
-  Edit,
-  ExternalLink,
-  Loader2,
-  XCircle,
-} from "lucide-react";
+import type { Project } from "@/types";
+import { Calendar, Edit, ExternalLink } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import toast from "react-hot-toast";
-
-type Project = {
-  id: string;
-  church_id: string;
-  project_name: string;
-  short_description: string;
-  main_photo_url: string;
-  video_url?: string;
-  language: string;
-  country: string;
-  submitted_at: string;
-  approved_at?: string | null;
-  additional_photos?: string;
-  church_email: string;
-  church_website?: string;
-  donation_link?: string;
-  status: string;
-};
 
 type ProjectApprovalCardProps = {
   project: Project;
-  // onApprove?: (projectId: string) => void;
-  // onReject?: (projectId: string) => void;
+  render: (
+    project: Project,
+    setOpen: (open: boolean) => void
+  ) => React.ReactNode;
 };
 
-export const ProjectApprovalCard = ({ project }: ProjectApprovalCardProps) => {
-  const router = useRouter();
+export const ProjectActionCard = ({
+  project,
+  render,
+}: ProjectApprovalCardProps) => {
   const [open, setOpen] = useState(false);
-  const [isApproving, setIsApproving] = useState(false);
-  const [isRejecting, setIsRejecting] = useState(false);
-  const additionalPhotos = project.additional_photos
-    ? JSON.parse(project.additional_photos)
+  const additionalPhotos = project.additional_photo
+    ? JSON.parse(project.additional_photo)
     : [];
 
   const formatDate = (dateString: string) => {
@@ -74,42 +49,6 @@ export const ProjectApprovalCard = ({ project }: ProjectApprovalCardProps) => {
       month: "short",
       day: "numeric",
     });
-  };
-  const handleApproveAndReject = async (type: "approved" | "rejected") => {
-    if (type === "approved") {
-      setIsApproving(true);
-    } else {
-      setIsRejecting(true);
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from("projects")
-        .update({ status: type, approved_at: new Date() })
-        .eq("id", project.id);
-      console.log("🚀 ~ handleApproveAndReject ~ data:", data);
-
-      if (error) throw error;
-
-      toast.success(
-        `Project ${type === "approved" ? "approved" : "rejected"} successfully`
-      );
-
-      // Close the dialog
-      setOpen(false);
-
-      // Refresh server component data
-      router.refresh();
-    } catch (error) {
-      console.log("🚀 ~ handleApproveAndReject ~ error:", error);
-      toast.error("Failed to update project status");
-    } finally {
-      if (type === "approved") {
-        setIsApproving(false);
-      } else {
-        setIsRejecting(false);
-      }
-    }
   };
 
   return (
@@ -277,35 +216,7 @@ export const ProjectApprovalCard = ({ project }: ProjectApprovalCardProps) => {
 
             <AlertDialogFooter className="gap-2 sm:gap-2">
               <AlertDialogCancel>Close</AlertDialogCancel>
-              <Button
-                variant="destructive"
-                onClick={() => handleApproveAndReject("rejected")}
-                className="gap-2"
-                disabled={isRejecting}
-              >
-                {isRejecting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <XCircle className="h-4 w-4" />
-                    Reject
-                  </>
-                )}
-              </Button>
-              <Button
-                onClick={() => handleApproveAndReject("approved")}
-                className="gap-2"
-                disabled={isApproving}
-              >
-                {isApproving ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <CheckCircle className="h-4 w-4" />
-                    Approve
-                  </>
-                )}
-              </Button>
+              {render(project, setOpen)}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
