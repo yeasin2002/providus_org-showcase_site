@@ -21,17 +21,14 @@ interface Mission {
   donationLink?: string;
 }
 
+
+
 interface MissionCardProps {
   mission: Mission;
-  isExpanded: boolean;
-  onToggle: () => void;
 }
 
-export function MissionCard({
-  mission,
-  isExpanded,
-  onToggle,
-}: MissionCardProps) {
+export function MissionCard({ mission }: MissionCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const allImages = [mission.mainImage, ...(mission.extraImages || [])];
@@ -43,7 +40,7 @@ export function MissionCard({
 
   const prevImage = () => {
     setCurrentImageIndex(
-      (prev) => (prev - 1 + allImages.length) % allImages.length,
+      (prev) => (prev - 1 + allImages.length) % allImages.length
     );
   };
 
@@ -59,18 +56,21 @@ export function MissionCard({
     .replace(/\s+/g, "-")}`;
 
   const handleToggle = () => {
-    onToggle();
+    const isClosing = isExpanded;
+    setIsExpanded(!isExpanded);
 
-    // Scroll to card after toggle
-    setTimeout(() => {
-      const element = document.getElementById(cardId);
-      if (element) {
-        const yOffset = -100; // Offset for spacing from top
-        const y =
-          element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
-    }, 100);
+    // If closing, scroll back to the card after a brief delay
+    if (isClosing) {
+      setTimeout(() => {
+        const element = document.getElementById(cardId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 100);
+    }
   };
 
   return (
@@ -119,7 +119,7 @@ export function MissionCard({
         <div
           className={cn(
             "overflow-hidden transition-all duration-300",
-            isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0",
+            isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
           )}
         >
           <div className="pt-4 border-t space-y-6">
@@ -156,14 +156,14 @@ export function MissionCard({
                     onClick={prevImage}
                     className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all"
                   >
-                    <ChevronUp className="w-5 h-5 rotate-[-90deg]" />
+                    <ChevronUp className="w-5 h-5 -rotate-90" />
                   </button>
                   <button
                     type="button"
                     onClick={nextImage}
                     className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all"
                   >
-                    <ChevronDown className="w-5 h-5 rotate-[-90deg]" />
+                    <ChevronDown className="w-5 h-5 -rotate-90" />
                   </button>
 
                   {/* Image Counter */}
@@ -180,10 +180,10 @@ export function MissionCard({
                       type="button"
                       onClick={() => setCurrentImageIndex(idx)}
                       className={cn(
-                        "flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
+                        "shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all",
                         currentImageIndex === idx
                           ? "border-gold"
-                          : "border-transparent opacity-60 hover:opacity-100",
+                          : "border-transparent opacity-60 hover:opacity-100"
                       )}
                     >
                       <Image
