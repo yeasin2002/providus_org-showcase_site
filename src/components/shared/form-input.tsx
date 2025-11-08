@@ -16,6 +16,7 @@ interface FormInputProps {
   type?: "text" | "email" | "password" | "number" | "tel" | "url";
   placeholder?: string;
   mathAnswer?: string | number;
+  disabled?: boolean;
 }
 
 export const FormInput = ({
@@ -28,6 +29,7 @@ export const FormInput = ({
   registration,
   type = "text",
   placeholder,
+  disabled = false,
 }: FormInputProps) => {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -50,6 +52,7 @@ export const FormInput = ({
         placeholder={placeholder}
         aria-invalid={!!error}
         className={cn("min-h-10 shadow-none", inputClassName)}
+        disabled={disabled}
         {...registration}
       />
 

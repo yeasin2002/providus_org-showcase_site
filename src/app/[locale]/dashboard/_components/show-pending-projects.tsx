@@ -13,27 +13,18 @@ interface ShowPendingProjectsProps {
   projects: Project[];
 }
 
-export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {projects.map((project) => (
-        <ProjectActionCard
-          key={project.id}
-          project={project}
-          render={PendingAction}
-        />
-      ))}
-    </div>
-  );
-};
-
-export const PendingAction = (
-  project: Project,
-  setOpen: (open: boolean) => void
-) => {
+// Component wrapper for PendingAction to properly use hooks
+const PendingActionWrapper = ({
+  project,
+  setOpen,
+}: {
+  project: Project;
+  setOpen: (open: boolean) => void;
+}) => {
   const router = useRouter();
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
+
   const handleApproveAndReject = async (type: "approved" | "rejected") => {
     if (type === "approved") {
       setIsApproving(true);
@@ -70,6 +61,7 @@ export const PendingAction = (
       }
     }
   };
+
   return (
     <>
       <Button
@@ -104,3 +96,25 @@ export const PendingAction = (
     </>
   );
 };
+
+export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {projects.map((project) => (
+        <ProjectActionCard
+          key={project.id}
+          project={project}
+          render={(proj, setOpen) => (
+            <PendingActionWrapper project={proj} setOpen={setOpen} />
+          )}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Export for backward compatibility if needed elsewhere
+export const PendingAction = (
+  project: Project,
+  setOpen: (open: boolean) => void
+) => <PendingActionWrapper project={project} setOpen={setOpen} />;

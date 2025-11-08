@@ -14,6 +14,7 @@ interface FormSelectProps {
   registration: UseFormRegisterReturn;
   placeholder?: string;
   options: { value: string; label: string }[];
+  disabled?: boolean;
 }
 
 export const FormSelect = ({
@@ -25,6 +26,7 @@ export const FormSelect = ({
   registration,
   placeholder = "Select an option",
   options,
+  disabled = false,
 }: FormSelectProps) => {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -39,11 +41,12 @@ export const FormSelect = ({
         <select
           id={registration.name}
           aria-invalid={!!error}
+          disabled={disabled}
           className={cn(
             "placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full appearance-none rounded-md border bg-transparent px-3 py-1 pr-10 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
             "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
             "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-            selectClassName,
+            selectClassName
           )}
           {...registration}
         >

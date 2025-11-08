@@ -14,6 +14,7 @@ interface FormTextareaProps {
   registration: UseFormRegisterReturn;
   placeholder?: string;
   rows?: number;
+  disabled?: boolean;
 }
 
 export const FormTextarea = ({
@@ -25,6 +26,7 @@ export const FormTextarea = ({
   registration,
   placeholder,
   rows = 4,
+  disabled = false,
 }: FormTextareaProps) => {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -41,6 +43,7 @@ export const FormTextarea = ({
         aria-invalid={!!error}
         className={textareaClassName}
         rows={rows}
+        disabled={disabled}
         {...registration}
       />
       {error && <p className="text-sm text-destructive">{error.message}</p>}
