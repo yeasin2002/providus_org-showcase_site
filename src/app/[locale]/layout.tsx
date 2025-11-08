@@ -2,8 +2,9 @@ import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Toaster } from "react-hot-toast";
 import "./../globals.css";
-import { RootLayoutWrapper } from "./root-layout";
 
 export const metadata: Metadata = {
   title: "ICSA",
@@ -18,9 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${fontVariables}  antialiased`}>
-        <RootLayoutWrapper>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
-        </RootLayoutWrapper>
+        <NextIntlClientProvider>
+          <NuqsAdapter>{children}</NuqsAdapter>
+          <Toaster />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

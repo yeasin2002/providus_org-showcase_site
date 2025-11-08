@@ -1,5 +1,7 @@
 import type { StaticImageData } from "next/image";
 
+export type ProjectStatus = "pending" | "approved" | "rejected" | "deleted";
+
 export type Church = {
   id: string;
   name: string;
@@ -27,7 +29,7 @@ export interface Project {
   church_email: string;
   church_website: string;
   donation_link: string;
-  status: string;
+  status: ProjectStatus;
   is_spotlight: boolean;
   churches?: Church;
 }
