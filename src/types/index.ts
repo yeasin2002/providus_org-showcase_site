@@ -29,5 +29,5 @@ export interface Project {
   donation_link: string;
   status: string;
   is_spotlight: boolean;
-  churches: Church;
+  churches?: Church;
 }

@@ -133,8 +133,8 @@ export function useFormSubmission({
 
       // Step 8: Send confirmation email to church
       await sendConfirmationEmail({ churchName, data, contact_email });
+      router.refresh();
       router.push("/thanks");
-      // return projectData;
     } catch (error) {
       console.error("Submission error:", error);
       setTimeWarning("An error occurred. Please try again.");

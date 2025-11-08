@@ -31,9 +31,11 @@ export default async function Upload({ searchParams }: Props) {
     .select("*", { count: "exact", head: true })
     .eq("church_id", token)
     .in("status", ["approved", "pending"])
-    .eq("archived", false);
+  
+  console.log("🚀 ~ Upload ~ activeProjectsCount:", activeProjectsCount);
 
   const isRestricted = (activeProjectsCount ?? 0) >= 5;
+  console.log("🚀 ~ Upload ~ isRestricted:", isRestricted);
 
   return (
     <div>

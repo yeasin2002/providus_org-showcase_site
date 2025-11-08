@@ -59,6 +59,10 @@ export const ProjectUploadForm = ({
     timeWarning,
   } = formSubmission;
 
+  const countriesData = countries.map((country) => ({
+    value: country.label,
+    label: country.label,
+  }));
   return (
     <section
       className="py-16 px-4 md:px-8 max-w-5xl mx-auto font-rubik"
@@ -169,7 +173,7 @@ export const ProjectUploadForm = ({
             required
             registration={register("country")}
             error={errors.country}
-            options={countries}
+            options={countriesData}
           />
         </div>
 
@@ -221,7 +225,7 @@ export const ProjectUploadForm = ({
             </div>
             <FormInput
               label=""
-              type="text"
+              type="number"
               registration={register("mathAnswer")}
               placeholder="Your answer"
               error={errors.mathAnswer}
