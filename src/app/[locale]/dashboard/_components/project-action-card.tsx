@@ -27,9 +27,10 @@ import { FormTextarea } from "@/components/shared/form-textarea";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { countries } from "@/data/countries-data";
+import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Calendar, Edit, Save } from "lucide-react";
+import { Calendar, Edit, MapPinned, Save } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import type { ProjectFormData } from "../../upload/types";
@@ -108,9 +109,25 @@ export const ProjectActionCard = ({
       <CardHeader>
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="line-clamp-1">{project.project_name}</CardTitle>
-          <Badge variant="secondary" className="shrink-0">
-            {project.country.toUpperCase()}
-          </Badge>
+          <div className="space-x-2">
+            <Badge variant="secondary" className="shrink-0 uppercase">
+              <MapPinned />
+              {project.country}
+            </Badge>
+
+            <Badge
+              variant="secondary"
+              className={cn("shrink-0 capitalize", {
+                "bg-green-500 text-white": project.status === "approved",
+                "bg-red-500 text-white": project.status === "rejected",
+                "bg-yellow-500 text-white": project.status === "pending",
+                "bg-gray-500 text-white": project.status === "deleted",
+              })}
+            >
+              <Calendar />
+              {project.status}
+            </Badge>
+          </div>
         </div>
         <CardDescription className="line-clamp-2">
           {project.short_description}
@@ -261,7 +278,9 @@ export const ProjectActionCard = ({
               </div>
 
               <AlertDialogFooter className="gap-2 sm:gap-2">
-                <AlertDialogCancel>Close</AlertDialogCancel>
+                <AlertDialogCancel className="cursor-pointer">
+                  Close
+                </AlertDialogCancel>
 
                 {isEditing ? (
                   <>

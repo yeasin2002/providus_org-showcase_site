@@ -3,7 +3,7 @@
 import type { Project, ProjectStatus } from "@/types";
 import { supabase } from "@/utils/supabase/client";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ShowPendingProjects } from "./_components";
 import { DashboardProjectFilter } from "./_components/dashboard-project-filter";
 
@@ -12,8 +12,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<ProjectStatus | "all">("all");
 
-  useEffect(() => {
-    const fetchProjects = async () => {
+  const fetchProjects = useMemo(
+    () => async () => {
       setLoading(true);
       let query = supabase.from("projects").select("*");
 
@@ -24,8 +24,12 @@ const Dashboard = () => {
       const { data: projects } = (await query) as { data: Project[] };
       setProjects(projects || []);
       setLoading(false);
-    };
+    },
+    [status]
+  );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
+  useEffect(() => {
     fetchProjects();
   }, [status]);
 
@@ -54,7 +58,10 @@ const Dashboard = () => {
           </p>
         </div>
       ) : (
-        <ShowPendingProjects projects={projects} />
+        <ShowPendingProjects
+          projects={projects}
+          refetchProjects={fetchProjects}
+        />
       )}
     </div>
   );

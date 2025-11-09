@@ -11,10 +11,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const menuItems = [
-  { name: "Home", href: "/dashboard" },
-  { name: "Spotlight", href: "/dashboard/spotlight" },
-];
+// const menuItems = [
+//   { name: "Home", href: "/dashboard" },
+//   { name: "Spotlight", href: "/dashboard/spotlight" },
+// ];
 
 export const DashboardHeader = () => {
   const router = useRouter();
@@ -44,7 +44,7 @@ export const DashboardHeader = () => {
           >
             <Image src={logo} alt="logo" className="size-20" />
           </Link>
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <ul className="flex gap-8 text-sm">
               {menuItems.map((item) => (
                 <li key={item.name}>
@@ -57,7 +57,7 @@ export const DashboardHeader = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <Button onClick={handleLogout} className="cursor-pointer">
             <LogOutIcon className="size-5" />
@@ -68,20 +68,3 @@ export const DashboardHeader = () => {
     </header>
   );
 };
-
-{
-  /* <div className="hidden lg:block">
-                <ul className="flex gap-8 text-sm">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
-                        <span>{item.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div> */
-}
