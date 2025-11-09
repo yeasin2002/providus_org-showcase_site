@@ -16,29 +16,33 @@ export const ShowPendingProjects = ({
 }: ShowPendingProjectsProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project) => {
-        return (
-          <ProjectActionCard
-            key={project.id}
-            project={project}
-            render={(proj, setOpen) =>
-              proj.status === "pending" ? (
+      {projects.map((project) => (
+        <ProjectActionCard
+          key={project.id}
+          project={project}
+          render={(proj, setOpen) => {
+            let statusAction: React.ReactNode;
+            if (proj.status === "pending") {
+              statusAction = (
                 <ProjectAcceptOrRejectAction
                   project={proj}
                   setOpen={setOpen}
                   refetchProjects={refetchProjects}
                 />
-              ) : (
-                <UnpublishAction
-                  project={proj}
-                  setOpen={setOpen}
-                  refetchProjects={refetchProjects}
-                />
-              )
+              );
+            } else if (
+              proj.status === "deleted" ||
+              proj.status === "rejected" ||
+              proj.status === "approved"
+            ) {
+              statusAction = (
+                <UnpublishAction project={proj} setOpen={setOpen} />
+              );
             }
-          />
-        );
-      })}
+            return statusAction;
+          }}
+        />
+      ))}
     </div>
   );
 };

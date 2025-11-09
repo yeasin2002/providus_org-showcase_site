@@ -7,6 +7,24 @@ import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 export interface ShowPendingProjectsProps {
   project: Project;
   setOpen: (open: boolean) => void;
@@ -20,8 +38,17 @@ export const ProjectAcceptOrRejectAction = ({
 }: ShowPendingProjectsProps) => {
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
+  const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
 
-  const handleApproveAndReject = async (type: ProjectStatus) => {
+  const [placeholderError, setPlaceholderError] = useState<
+    string | undefined
+  >();
+  const [placeholder, setPlaceholder] = useState<string | undefined>();
+
+  const handleApproveAndReject = async (
+    type: ProjectStatus,
+    is_spotlight = false
+  ) => {
     if (type === "approved") {
       setIsApproving(true);
     } else {
@@ -31,7 +58,7 @@ export const ProjectAcceptOrRejectAction = ({
     try {
       const { data, error } = await supabase
         .from("projects")
-        .update({ status: type, approved_at: new Date() })
+        .update({ status: type, approved_at: new Date(), is_spotlight })
         .eq("id", project.id);
       console.log("🚀 ~ handleApproveAndReject ~ data:", data);
 
@@ -76,7 +103,7 @@ export const ProjectAcceptOrRejectAction = ({
         )}
       </Button>
       <Button
-        onClick={() => handleApproveAndReject("approved")}
+        onClick={() => setIsAcceptModalOpen(true)}
         className="gap-2"
         disabled={isApproving}
       >
@@ -89,6 +116,70 @@ export const ProjectAcceptOrRejectAction = ({
           </>
         )}
       </Button>
+
+      <AlertDialog
+        open={isAcceptModalOpen}
+        onOpenChange={() => {
+          setPlaceholderError(undefined);
+          setPlaceholder(undefined);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <div>
+            <Label htmlFor="placeholder" className="mb-2 mt-8">
+              Select Placeholder
+            </Label>
+            <Select
+              onValueChange={(value) => setPlaceholder(value)}
+              value={placeholder}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Placeholder" />
+              </SelectTrigger>
+              <SelectContent id="placeholder">
+                <SelectItem value="spotlight">Spotlight</SelectItem>
+                <SelectItem value="mission">Mission</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-red-500 text-xs"> {placeholderError} </p>
+          </div>
+          <AlertDialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsAcceptModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!placeholder) {
+                  return setPlaceholderError("Please select a placeholder");
+                }
+                await handleApproveAndReject(
+                  "approved",
+                  placeholder === "spotlight"
+                );
+                setIsAcceptModalOpen(false);
+                setOpen(false);
+              }}
+            >
+              {isApproving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Continue"
+              )}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
