@@ -147,7 +147,7 @@ export const ProjectActionCard = ({
               Review
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="min-w-4xl max-h-[90vh] overflow-y-auto">
+          <AlertDialogContent className="min-w-6xl max-h-[90vh] overflow-y-auto">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-2xl">
                 {project.project_name}

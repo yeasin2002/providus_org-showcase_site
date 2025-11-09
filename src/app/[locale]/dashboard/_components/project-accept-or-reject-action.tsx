@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+import { MissionCard } from "@/components/home/mission/mission-card";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -124,7 +125,7 @@ export const ProjectAcceptOrRejectAction = ({
           setPlaceholder(undefined);
         }}
       >
-        <AlertDialogContent>
+        <AlertDialogContent className="overflow-y-scroll min-w-5xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -150,6 +151,10 @@ export const ProjectAcceptOrRejectAction = ({
               </SelectContent>
             </Select>
             <p className="text-red-500 text-xs"> {placeholderError} </p>
+
+            <div>
+              <MissionCard key={project.id} mission={project} />
+            </div>
           </div>
           <AlertDialogFooter>
             <Button

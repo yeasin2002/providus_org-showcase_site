@@ -15,7 +15,7 @@ const Dashboard = () => {
   const fetchProjects = useMemo(
     () => async () => {
       setLoading(true);
-      let query = supabase.from("projects").select("*");
+      let query = supabase.from("projects").select(`*,churches (*)`);
 
       if (status && status !== "all") {
         query = query.eq("status", status);

@@ -64,7 +64,7 @@ export function MissionCard({ mission }: MissionCardProps) {
         {/* Category Badge */}
         <div className="mb-3">
           <Button className="text-white bg-gold hover:bg-gold/90 h-7 text-xs px-3 pointer-events-none">
-            {mission.churches.name}
+            {mission?.churches?.name}
           </Button>
         </div>
 
@@ -148,31 +148,31 @@ export function MissionCard({ mission }: MissionCardProps) {
                 Contact This Mission
               </h5>
               <div className="space-y-3">
-                {mission.churches.contact_email && (
+                {mission?.churches?.contact_email && (
                   <div className="flex items-start gap-2">
                     <span className="text-gray-600 font-medium min-w-[80px]">
                       Email:
                     </span>
                     <a
-                      href={`mailto:${mission.churches.contact_email}`}
+                      href={`mailto:${mission?.churches?.contact_email}`}
                       className="text-gold hover:underline break-all"
                     >
-                      {mission.churches.contact_email}
+                      {mission?.churches?.contact_email}
                     </a>
                   </div>
                 )}
-                {mission.churches.website && (
+                {mission?.churches?.website && (
                   <div className="flex items-start gap-2">
                     <span className="text-gray-600 font-medium min-w-[80px]">
                       Website:
                     </span>
                     <a
-                      href={mission.churches.website}
+                      href={mission?.churches?.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gold hover:underline break-all"
                     >
-                      {mission.churches.website}
+                      {mission?.churches?.website}
                     </a>
                   </div>
                 )}
