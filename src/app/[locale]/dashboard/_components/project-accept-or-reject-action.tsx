@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSendEmail } from "@/hooks/useSendEmail";
 
 export interface ShowPendingProjectsProps {
   project: Project;
@@ -37,6 +38,7 @@ export const ProjectAcceptOrRejectAction = ({
   setOpen,
   refetchProjects,
 }: ShowPendingProjectsProps) => {
+  const { sendEmail } = useSendEmail();
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
@@ -60,6 +62,7 @@ export const ProjectAcceptOrRejectAction = ({
       const { data, error } = await supabase
         .from("projects")
         .update({ status: type, approved_at: new Date(), is_spotlight })
+        .select(`*,churches (*)`)
         .eq("id", project.id);
       console.log("🚀 ~ handleApproveAndReject ~ data:", data);
 
@@ -74,6 +77,56 @@ export const ProjectAcceptOrRejectAction = ({
 
       // Refresh server component data
       refetchProjects();
+      const emailSubject =
+        type === "approved"
+          ? "Congratulations! Your ICSA Project Has Been Approved"
+          : "Update on Your ICSA Project Submission";
+
+      const emailText =
+        type === "approved"
+          ? `Dear ${project?.churches?.name},
+
+Congratulations! Your project "${
+              project?.project_name
+            }" has been approved and is now live on the ICSA Showcase Site.
+
+Your mission story is now visible to supporters and partners worldwide at:
+${process.env.NEXT_PUBLIC_SITE_URL || "https://voices.icsa.church"}
+
+What's Next:
+- Your project is now publicly visible on our showcase grid
+- Visitors can view your full mission story, photos, and videos
+- Your ICSA membership certificate will be sent in a separate email
+
+Thank you for being part of the ICSA community and sharing your important work with the world.
+
+Blessings,
+The ICSA Team
+
+---
+This is an automated message. Please do not reply to this email.`
+          : `Dear ${project?.churches?.name},
+
+Thank you for submitting your project "${
+              project?.project_name
+            }" to the ICSA Showcase Site.
+
+After careful review, we are unable to approve this project at this time.
+If you have questions or would like to resubmit with updates, please feel free to reach out to our support team.
+
+We appreciate your interest in ICSA and encourage you to submit future projects that align with our guidelines.
+
+Blessings,
+The ICSA Team
+
+---
+This is an automated message. Please do not reply to this email.`;
+
+      await sendEmail({
+        to: project?.churches?.contact_email as string,
+        subject: emailSubject,
+        text: emailText,
+      });
     } catch (error) {
       console.log("🚀 ~ handleApproveAndReject ~ error:", error);
       toast.error("Failed to update project status");
@@ -157,7 +210,9 @@ export const ProjectAcceptOrRejectAction = ({
 
             <div className="mt-8">
               <p className="text-xl font-semibold mb-2">Preview</p>
-              <MissionCard key={project.id} mission={project} />
+              <div className="grid grid-cols-2">
+                <MissionCard key={project.id} mission={project} />
+              </div>
             </div>
           </div>
           <AlertDialogFooter>
