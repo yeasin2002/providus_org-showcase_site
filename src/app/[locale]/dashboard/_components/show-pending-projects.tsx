@@ -13,8 +13,8 @@ interface ShowPendingProjectsProps {
   projects: Project[];
 }
 
-// Component wrapper for PendingAction to properly use hooks
-const PendingActionWrapper = ({
+
+const ProjectActionsContainer = ({
   project,
   setOpen,
 }: {
@@ -99,13 +99,13 @@ const PendingActionWrapper = ({
 
 export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((project) => (
         <ProjectActionCard
           key={project.id}
           project={project}
           render={(proj, setOpen) => (
-            <PendingActionWrapper project={proj} setOpen={setOpen} />
+            <ProjectActionsContainer project={proj} setOpen={setOpen} />
           )}
         />
       ))}
@@ -113,8 +113,3 @@ export const ShowPendingProjects = ({ projects }: ShowPendingProjectsProps) => {
   );
 };
 
-// Export for backward compatibility if needed elsewhere
-export const PendingAction = (
-  project: Project,
-  setOpen: (open: boolean) => void
-) => <PendingActionWrapper project={project} setOpen={setOpen} />;

@@ -7,22 +7,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ProjectStatus } from "@/types";
+import type { ProjectStatus } from "@/types";
 
-import { useQueryState } from "nuqs";
+interface Props {
+  status: ProjectStatus | "all";
+  setStatus: (value: ProjectStatus) => void;
+}
 
-export const DashboardProjectFilter = () => {
-  const [name, setName] = useQueryState<ProjectStatus | "all">("status", {
-    defaultValue: "all",
-    parse: (value: string) => value as ProjectStatus,
-  });
+export const DashboardProjectFilter = ({ status, setStatus }: Props) => {
   const handleStatus = (value: ProjectStatus) => {
-    setName(value);
+    setStatus(value);
   };
 
   return (
     <div>
-      <Select onValueChange={handleStatus} value={name || ""}>
+      <Select onValueChange={handleStatus} value={status || ""}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Status" />
         </SelectTrigger>

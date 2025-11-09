@@ -1,21 +1,33 @@
-import { ProjectStatus } from "@/types";
-import { createClient } from "@/utils/supabase/server";
+"use client";
+
+import type { Project, ProjectStatus } from "@/types";
+import { supabase } from "@/utils/supabase/client";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { ShowPendingProjects } from "./_components";
 import { DashboardProjectFilter } from "./_components/dashboard-project-filter";
 
-interface Props {
-  searchParams: { status: ProjectStatus };
-}
+const Dashboard = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<ProjectStatus | "all">("all");
 
-const Dashboard = async ({ searchParams }: Props) => {
-  console.log("🚀 ~ Dashboard ~ searchParams:", searchParams);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setLoading(true);
+      let query = supabase.from("projects").select("*");
 
-  const supabase = await createClient();
+      if (status && status !== "all") {
+        query = query.eq("status", status);
+      }
 
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("status", searchParams.status);
+      const { data: projects } = (await query) as { data: Project[] };
+      setProjects(projects || []);
+      setLoading(false);
+    };
+
+    fetchProjects();
+  }, [status]);
 
   return (
     <div className="container mx-auto p-8">
@@ -26,12 +38,20 @@ const Dashboard = async ({ searchParams }: Props) => {
             Review and approve pending project submissions
           </p>
         </div>
-        <DashboardProjectFilter />
+        <DashboardProjectFilter status={status} setStatus={setStatus} />
       </div>
 
-      {!projects || projects.length === 0 ? (
+      {loading ? (
+        <div className="flex items-center justify-center">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Loading...
+        </div>
+      ) : !projects || projects.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">No pending projects to review</p>
+          <p className="text-muted-foreground">
+            No <span className="font-semibold">"{status}"</span> projects to
+            review
+          </p>
         </div>
       ) : (
         <ShowPendingProjects projects={projects} />
