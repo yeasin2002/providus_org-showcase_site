@@ -150,7 +150,7 @@ export const ProjectUploadForm = ({
 
           {/* ✅ Additional Photos (optional) */}
           <Controller
-            name="additionalPhotos"
+            name="additionalPhoto"
             control={control}
             render={({ field }) => (
               <FormFileUpload
@@ -159,7 +159,7 @@ export const ProjectUploadForm = ({
                 maxSize={5 * 1024 * 1024}
                 icon={<Upload className="w-6 h-6 text-[#C4A053]" />}
                 helperText="JPG/PNG/WebP Max 5MB each — You may upload extra photos to show your mission or community."
-                error={errors.additionalPhotos as never}
+                error={errors.additionalPhoto as never}
                 onChange={(files) => field.onChange(files)}
               />
             )}

@@ -23,7 +23,7 @@ export const projectSchema = z.object({
     .url("Please enter a valid URL")
     .optional()
     .or(z.literal("")),
-  additionalPhotos: z.unknown().optional(),
+  additionalPhoto: z.unknown().optional(),
   mathAnswer: z.string().optional(),
 });
 

@@ -43,6 +43,9 @@ export function useFormSubmission({
   const router = useRouter();
 
   const handleSubmit = async (data: ProjectFormData) => {
+    console.log(data);
+
+
     setSubmitAttempted(true);
     setTimeWarning("");
 
@@ -105,11 +108,16 @@ export function useFormSubmission({
         videoUrl = await uploadFile(videoFile, getVideoFolder(churchId));
       }
 
-      // Step 6: Upload additional photo (optional)
+      // Step 6: Upload additional photos (optional)
       let additionalPhotoUrl: string | null = null;
-      if (data.additionalPhotos && data.additionalPhotos instanceof File) {
+      if (
+        data.additionalPhoto &&
+        Array.isArray(data.additionalPhoto) &&
+        data.additionalPhoto.length > 0
+      ) {
+        const additionalPhotoFile = data.additionalPhoto[0] as File;
         additionalPhotoUrl = await uploadFile(
-          data.additionalPhotos,
+          additionalPhotoFile,
           getAdditionalPhotosFolder(churchId)
         );
       }
