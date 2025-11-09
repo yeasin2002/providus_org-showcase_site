@@ -1,11 +1,20 @@
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { Project, ProjectStatus } from "@/types";
 import { supabase } from "@/utils/supabase/client";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { ShowPendingProjects } from "./_components";
-import { DashboardProjectFilter } from "./_components/dashboard-project-filter";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -42,7 +51,30 @@ const Dashboard = () => {
             Review and approve pending project submissions
           </p>
         </div>
-        <DashboardProjectFilter status={status} setStatus={setStatus} />
+        <div className="flex items-center  gap-x-2">
+          <Select
+            onValueChange={(value: ProjectStatus) => setStatus(value)}
+            value={status || ""}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="rejected">Rejected</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            variant={"outline"}
+            onClick={fetchProjects}
+            disabled={loading}
+          >
+            <RefreshCcw className={cn("h-4 w-4 ", loading && "animate-spin")} />
+            <span className="sr-only">refresh</span>
+          </Button>
+        </div>
       </div>
 
       {loading ? (
