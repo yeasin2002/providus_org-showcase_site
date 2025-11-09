@@ -125,7 +125,7 @@ export const ProjectAcceptOrRejectAction = ({
           setPlaceholder(undefined);
         }}
       >
-        <AlertDialogContent className="overflow-y-scroll min-w-5xl">
+        <AlertDialogContent className="max-h-[90vh] flex flex-col min-w-5xl py-4">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -134,7 +134,7 @@ export const ProjectAcceptOrRejectAction = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <div>
+          <div className="overflow-y-auto flex-1 pr-2">
             <Label htmlFor="placeholder" className="mb-2 mt-8">
               Select Placeholder
             </Label>
@@ -143,7 +143,10 @@ export const ProjectAcceptOrRejectAction = ({
               value={placeholder}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select Placeholder" />
+                <SelectValue
+                  placeholder="Select Placeholder"
+                  className="text-xl"
+                />
               </SelectTrigger>
               <SelectContent id="placeholder">
                 <SelectItem value="spotlight">Spotlight</SelectItem>
@@ -152,7 +155,8 @@ export const ProjectAcceptOrRejectAction = ({
             </Select>
             <p className="text-red-500 text-xs"> {placeholderError} </p>
 
-            <div>
+            <div className="mt-8">
+              <p className="text-xl font-semibold mb-2">Preview</p>
               <MissionCard key={project.id} mission={project} />
             </div>
           </div>
